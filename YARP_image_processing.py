@@ -98,7 +98,7 @@ def read_robot_eye(port_eye, eye_yarp_image, eye_img_array):
             eye_img_array   -- np array for the eye image
     return: eye_img_array   -- np array now containing the eye image
     '''
-    # Read the data from the port into the image
+    # Read the images from the robot camera
 #    time_transfer = time.time()
     port_eye.read(eye_yarp_image)
     port_eye.read(eye_yarp_image)

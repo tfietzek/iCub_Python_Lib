@@ -100,7 +100,7 @@ def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0):
     while not motion:
         time.sleep(0.01)
         motion = iPos_h.checkMotionDone()
-    time.sleep(0.4)
+    time.sleep(0.1)
 
 
 ######################################################################
