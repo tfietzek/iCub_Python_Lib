@@ -17,9 +17,11 @@ def motor_init(part):
     initialize motor control for the given part 
 
     params: part    -- part of the iCub to be controlled (string: head, left_arm, right_arm, ...)
+
     return: iPos    -- Position Controller for the given iCub part
             iEnc    -- Encoder for the controlled joints
             jnts    -- number of controlled joints
+            Driver  -- device driver; need to be returned, otherwise joint controlboard is closed
     '''
     # prepare a property object
     props = yarp.Property()
@@ -28,17 +30,17 @@ def motor_init(part):
     props.put("remote","/icubSim/"+ part)
 
     # create remote driver
-    DeadDriver = yarp.PolyDriver(props)
+    Driver = yarp.PolyDriver(props)
 
     #query motor control interfaces
-    iPos = DeadDriver.viewIPositionControl()
-    iEnc = DeadDriver.viewIEncoders()
+    iPos = Driver.viewIPositionControl()
+    iEnc = Driver.viewIEncoders()
     
     #retrieve number of joints
     jnts=iPos.getAxes()
 
     print('----- Controlling', jnts, 'joints -----')
-    return iPos, iEnc, jnts, DeadDriver
+    return iPos, iEnc, jnts, Driver
 
 
 ######################################################################
@@ -60,7 +62,7 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
 
 
 ######################################################################
-###################### go to head zero position ######################
+############### move controlled part to a new position ###############
 def goto_position_block(iPos, iEnc, jnts, position):
     '''
     go to given position
@@ -148,7 +150,7 @@ def set_pos_vector(pos_vec, a, b, c, d, e, f):
 
 def set_pos_vector_array(position, jnts):
     '''
-    set position vector with given values for each joint (6 joints like iCub head)
+    set position vector with given values for each joint (e.g.6 joints for iCub head)
 
     params: position    -- position in array-like structure (list/numpy array)
             jnts        -- number of joints
