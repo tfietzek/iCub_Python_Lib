@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['readme',['ReadMe',['../md__home_toto_Desktop_iCub_Python_Lib_ReadMe.html',1,'']]],
   ['read_5frobot_5feye',['read_robot_eye',['../namespaceiCub__Python__Lib_1_1YARP__image__processing.html#ad10643c714e7995503aa08a0e2234b16',1,'iCub_Python_Lib::YARP_image_processing']]],
   ['read_5frobot_5feyes',['read_robot_eyes',['../namespaceiCub__Python__Lib_1_1YARP__image__processing.html#aa1c91934de1db42b732e12a8bb25eda7',1,'iCub_Python_Lib::YARP_image_processing']]],
   ['readme_2emd',['ReadMe.md',['../ReadMe_8md.html',1,'']]],
