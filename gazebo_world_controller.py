@@ -14,9 +14,9 @@ yarp.Network.init()  # Initialise YARP
 
 ####################################################
 """
-  loadModelFromFile -> to be tested
-  attach
-  detach
+    TODO:
+        attach
+        detach
 """
 
 ########################################################
@@ -223,7 +223,7 @@ class WorldController:
 
             Parameters:
                 obj_id      -- internal model ID to reference the object
-                new_name    -- 
+                new_name    -- new model name
 
             Returns:
                 True/False dependent on success/failure.
@@ -253,7 +253,7 @@ class WorldController:
 
     def change_color(self, obj_id, new_color):
         """
-        !!! not fully implemented in plugins!!!
+            !!! not fully implemented in plugins!!!
             Set a new color for the given object.
 
             Parameters:
@@ -400,7 +400,6 @@ class WorldController:
 
     ########################################################
     ########### load 3D model into the simulator ###########
-
     def _prepare_create_model_command_model(self, filename, location, orientation):
         """
             Prepare an RPC command for importing a model in the simulator environment.

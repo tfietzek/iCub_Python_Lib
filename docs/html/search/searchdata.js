@@ -1,12 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "_cdegimnprswy",
+  0: "_cdegimnoprstwy",
   1: "mw",
   2: "i",
   3: "_gipry",
   4: "_cdegmnrsy",
-  5: "dmp",
-  6: "r"
+  5: "dgimopt"
 };
 
 var indexSectionNames =
@@ -16,8 +15,7 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "variables",
-  6: "pages"
+  5: "variables"
 };
 
 var indexSectionLabels =
@@ -27,7 +25,6 @@ var indexSectionLabels =
   2: "Namespaces",
   3: "Files",
   4: "Functions",
-  5: "Variables",
-  6: "Pages"
+  5: "Variables"
 };
 

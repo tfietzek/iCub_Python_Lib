@@ -73,14 +73,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adcf962edd08c3dfe36e98f050b973eff"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiCub__Python__Lib_1_1YARP__motor__control.html#adcf962edd08c3dfe36e98f050b973eff">motor_init</a> (part)</td></tr>
-<tr class="memdesc:adcf962edd08c3dfe36e98f050b973eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">init motor control #########################  <a href="#adcf962edd08c3dfe36e98f050b973eff">More...</a><br /></td></tr>
-<tr class="separator:adcf962edd08c3dfe36e98f050b973eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942984aa355a45030c0d2779bab9d010"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiCub__Python__Lib_1_1YARP__motor__control.html#a942984aa355a45030c0d2779bab9d010">motor_init</a> (part, robot_prefix=&quot;icubSim&quot;, client_prefix=&quot;client&quot;)</td></tr>
+<tr class="memdesc:a942984aa355a45030c0d2779bab9d010"><td class="mdescLeft">&#160;</td><td class="mdescRight">init motor control #########################  <a href="#a942984aa355a45030c0d2779bab9d010">More...</a><br /></td></tr>
+<tr class="separator:a942984aa355a45030c0d2779bab9d010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42ffce67339192674497dd49af9ec2b3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiCub__Python__Lib_1_1YARP__motor__control.html#a42ffce67339192674497dd49af9ec2b3">goto_zero_head_pos</a> (iPos_head, iEnc_head, jnts_head)</td></tr>
 <tr class="memdesc:a42ffce67339192674497dd49af9ec2b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">go to head zero position ######################  <a href="#a42ffce67339192674497dd49af9ec2b3">More...</a><br /></td></tr>
 <tr class="separator:a42ffce67339192674497dd49af9ec2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb2011a79e6d28602d3c4d3514016366"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiCub__Python__Lib_1_1YARP__motor__control.html#aeb2011a79e6d28602d3c4d3514016366">goto_position_block</a> (iPos, iEnc, jnts, position)</td></tr>
-<tr class="memdesc:aeb2011a79e6d28602d3c4d3514016366"><td class="mdescLeft">&#160;</td><td class="mdescRight">go to head zero position ######################  <a href="#aeb2011a79e6d28602d3c4d3514016366">More...</a><br /></td></tr>
+<tr class="memdesc:aeb2011a79e6d28602d3c4d3514016366"><td class="mdescLeft">&#160;</td><td class="mdescRight">move controlled part to a new position ###############  <a href="#aeb2011a79e6d28602d3c4d3514016366">More...</a><br /></td></tr>
 <tr class="separator:aeb2011a79e6d28602d3c4d3514016366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52c4ec76ce9e233322c766b3a79af3ae"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceiCub__Python__Lib_1_1YARP__motor__control.html#a52c4ec76ce9e233322c766b3a79af3ae">move_eyes</a> (eye_pos, iPos_h, jnts_h, offset_h=0)</td></tr>
 <tr class="memdesc:a52c4ec76ce9e233322c766b3a79af3ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">move eyes to new position ######################  <a href="#a52c4ec76ce9e233322c766b3a79af3ae">More...</a><br /></td></tr>
@@ -140,7 +140,7 @@ library for functions related to the motor control
 params: iEnc    -- Encoder for the controlled joints
         jnts    -- number of joints
 
-return: encs    -- Vector containing the joint positions
+return: encs    -- YARP-Vector containing the joint positions
 </pre> 
 </div>
 </div>
@@ -182,12 +182,13 @@ return: encs    -- Vector containing the joint positions
       </table>
 </div><div class="memdoc">
 
-<p>go to head zero position ###################### </p>
+<p>move controlled part to a new position ############### </p>
 <pre class="fragment">go to given position
 
-params: iPos   -- Position Controller for the iCub part
-        iEnc   -- Encoder for the joints
-        jnts   -- number of controlled joints
+params: iPos        -- Position Controller for the iCub part
+        iEnc        -- Encoder for the joints
+        jnts        -- number of controlled joints
+        position    -- new position as YARP-Vector
 </pre> 
 </div>
 </div>
@@ -232,8 +233,8 @@ params: iPos_head   -- Position Controller for the iCub head
 </pre> 
 </div>
 </div>
-<a id="adcf962edd08c3dfe36e98f050b973eff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcf962edd08c3dfe36e98f050b973eff">&#9670;&nbsp;</a></span>motor_init()</h2>
+<a id="a942984aa355a45030c0d2779bab9d010"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a942984aa355a45030c0d2779bab9d010">&#9670;&nbsp;</a></span>motor_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,8 +243,24 @@ params: iPos_head   -- Position Controller for the iCub head
           <td class="memname">def iCub_Python_Lib.YARP_motor_control.motor_init </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>part</em></td><td>)</td>
+          <td class="paramname"><em>part</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>robot_prefix</em> = <code>&quot;icubSim&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>client_prefix</em> = <code>&quot;client&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -252,9 +269,11 @@ params: iPos_head   -- Position Controller for the iCub head
 <pre class="fragment">initialize motor control for the given part 
 
 params: part    -- part of the iCub to be controlled (string: head, left_arm, right_arm, ...)
+
 return: iPos    -- Position Controller for the given iCub part
         iEnc    -- Encoder for the controlled joints
         jnts    -- number of controlled joints
+        Driver  -- device driver; need to be returned, otherwise joint controlboard is closed
 </pre> 
 </div>
 </div>
@@ -302,6 +321,7 @@ return: iPos    -- Position Controller for the given iCub part
 params: eye_pos     -- target eye position [ gaze_y, gaze_x, vergence_angle ]
         iPos_h      -- Position Controller for the iCub head
         jnts_h      -- number of head joints
+        offset_h    -- head offset in left/right direction
 </pre> 
 </div>
 </div>
@@ -389,13 +409,13 @@ return: yarp_vec    -- YARP vector, result of conversion
 <p>set YARP position vector with given values ############# </p>
 <pre class="fragment">set position vector with given values for each joint (6 joints like iCub head)
 
-params: pos_vec     -- position vector
-        a           -- value joint 0
-        b           -- value joint 1
-        c           -- value joint 2
-        d           -- value joint 3
-        e           -- value joint 4
-        f           -- value joint 5
+params: pos_vec     -- YARP position vector
+        a           -- value joint 0, double value
+        b           -- value joint 1, double value
+        c           -- value joint 2, double value
+        d           -- value joint 3, double value
+        e           -- value joint 4, double value
+        f           -- value joint 5, double value
 
 return: pos_vec     -- position as YARP vector
 </pre> 
@@ -426,9 +446,9 @@ return: pos_vec     -- position as YARP vector
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">set position vector with given values for each joint (6 joints like iCub head)
+<pre class="fragment">set position vector with given values for each joint (e.g.6 joints for iCub head)
 
-params: position    -- position in array-like structure (list/numpy array)
+params: position    -- position in array-like structure (list/numpy array), double values
         jnts        -- number of joints
 
 return: pos_vec     -- position as YARP vector
@@ -463,7 +483,7 @@ return: pos_vec     -- position as YARP vector
 <pre class="fragment">set position vector with one value for all joints
 
 params: pos_vec     -- position vector
-        a           -- value for all joints
+        a           -- value for all joints, double value
         jnts        -- number of joints
 
 return: pos_vec     -- position as YARP vector
