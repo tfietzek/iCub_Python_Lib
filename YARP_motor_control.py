@@ -12,11 +12,12 @@ import time
 
 ######################################################################
 ######################### init motor control #########################
-def motor_init(part):
+def motor_init(part, control="position"):
     '''
     initialize motor control for the given part 
 
-    params: part    -- part of the iCub to be controlled (string: head, left_arm, right_arm, ...)
+    params: part        -- part of the iCub to be controlled (string: head, left_arm, right_arm, ...)
+            control     -- control type: position(default) -> joint angle control ; velocity -> joint velocity control 
 
     return: iPos    -- Position Controller for the given iCub part
             iEnc    -- Encoder for the controlled joints
@@ -32,15 +33,18 @@ def motor_init(part):
     # create remote driver
     Driver = yarp.PolyDriver(props)
 
-    #query motor control interfaces
-    iPos = Driver.viewIPositionControl()
+    # query motor control interfaces
+    if control == "position":
+        iCtrl = Driver.viewIPositionControl()
+    elif control == "velocity":
+        iCtrl = Driver.viewIVelocityControl()
     iEnc = Driver.viewIEncoders()
     
-    #retrieve number of joints
-    jnts=iPos.getAxes()
+    # retrieve number of joints
+    jnts=iCtrl.getAxes()
 
     print('----- Controlling', jnts, 'joints -----')
-    return iPos, iEnc, jnts, Driver
+    return iCtrl, iEnc, jnts, Driver
 
 
 ######################################################################
@@ -62,10 +66,10 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
 
 
 ######################################################################
-############### move controlled part to a new position ###############
+########## Move joints of controlled part to a new position ##########
 def goto_position_block(iPos, iEnc, jnts, position):
     '''
-    go to given position
+    Go to given position and block until motion done
 
     params: iPos   -- Position Controller for the iCub part
             iEnc   -- Encoder for the joints
@@ -82,19 +86,20 @@ def goto_position_block(iPos, iEnc, jnts, position):
 
 
 ######################################################################
-##################### move eyes to new position ######################
-def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0):
+##################### Move eyes to new position ######################
+def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0.0):
     '''
     move the iCub eyes to a new position
 
     params: eye_pos     -- target eye position [ gaze_y, gaze_x, vergence_angle ]
             iPos_h      -- Position Controller for the iCub head
             jnts_h      -- number of head joints
+            offset_h    -- head offset position
     '''
     targ_pos = set_pos_vector_same(0.0, jnts_h)
     targ_pos.set(2, offset_h)
     targ_pos.set(3, eye_pos[0])
-    targ_pos.set(4, (eye_pos[1] + offset_h))
+    targ_pos.set(4, (eye_pos[1] - offset_h))
     targ_pos.set(5, eye_pos[2])
 
     iPos_h.positionMove(targ_pos.data())
