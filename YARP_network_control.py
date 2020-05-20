@@ -5,6 +5,7 @@ Created on Thu Apr 13 15:16:32 2018
 
 library for network functions
 """
+import sys
 
 import yarp
 
@@ -23,8 +24,7 @@ def network_initial():
     # network initialization and check
     yarp.Network.init()
     if not yarp.Network.checkNetwork():
-        print("[error] Please try running yarp server")
-        quit()
+        sys.exit('[ERROR] Please try running yarp server')
 
     # Initialization of all needed ports
 
@@ -32,22 +32,19 @@ def network_initial():
     input_port_right_eye = yarp.Port()
     input_port_right_eye.open("/eyes/right")
     if not yarp.Network.connect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not connect input_port_right_eye")
-        quit()
+        sys.exit("[ERROR] Could not connect input_port_right_eye")
 
     # Port for left eye image
     input_port_left_eye = yarp.Port()
     input_port_left_eye.open("/eyes/left")
     if not yarp.Network.connect("/icubSim/cam/left", "/eyes/left"):
-        print("[error] Could not connect input_port_left_eye")
-        quit()
+        sys.exit("[ERROR] Could not connect input_port_left_eye")
 
     # Port for the screen
     output_port_screen = yarp.Port()
     output_port_screen.open("/simscreen")
     if not yarp.Network.connect("/simscreen", "/icubSim/texture/screen"):
-        print("[error] Could not connect to screen")
-        quit()
+        sys.exit("[ERROR] Could not connect to screen")
 
     return output_port_screen, input_port_right_eye, input_port_left_eye
 
@@ -64,14 +61,13 @@ def network_clean(screen_port, port_right_eye, port_left_eye):
     '''
     # disconnect the ports
     if not yarp.Network.disconnect("/simscreen", "/icubSim/texture/screen"):
-        print("[error] Could not disconnect from Screen")
-        quit()
+        sys.exit("[ERROR] Could not disconnect from Screen")
+
     if not yarp.Network.disconnect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not disconnect input_port_right_eye")
-        quit()
+        sys.exit("[ERROR] Could not disconnect input_port_right_eye")
+
     if not yarp.Network.disconnect("/icubSim/cam/left", "/eyes/left"):
-        print("[error] Could not disconnect input_port_left_eye")
-        quit()
+        sys.exit("[ERROR] Could not disconnect input_port_left_eye")
 
     # close the ports
     screen_port.close()
@@ -94,8 +90,7 @@ def network_initial_only_right():
     # network initialization and check
     yarp.Network.init()
     if not yarp.Network.checkNetwork():
-        print("[error] Please try running yarp server")
-        quit()
+        sys.exit('[ERROR] Please try running yarp server')
 
     # Initialization of all needed ports
 
@@ -103,15 +98,13 @@ def network_initial_only_right():
     input_port_right_eye = yarp.Port()
     input_port_right_eye.open("/eyes/right")
     if not yarp.Network.connect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not connect input_port_right_eye")
-        quit()
+        sys.exit("[ERROR] Could not connect input_port_right_eye")
 
     # Port for the screen
     output_port_screen = yarp.Port()
     output_port_screen.open("/Grabber")
-    if yarp.Network.connect("/Grabber", "/icubSim/texture/screen") != True:
-        print("[error] Could not connect Grabber to Texture")
-        quit()
+    if not yarp.Network.connect("/Grabber", "/icubSim/texture/screen"):
+        sys.exit("[ERROR] Could not connect Grabber to Texture")
 
     return output_port_screen, input_port_right_eye
 
@@ -127,11 +120,10 @@ def network_clean_only_right(screen_port, port_right_eye):
     '''
     # disconnect the ports
     if not yarp.Network.disconnect("/Grabber", "/icubSim/texture/screen"):
-        print("[error] Could not disconnect Grabber to Texture")
-        quit()
+        sys.exit("[ERROR] Could not disconnect Grabber to Texture")
+
     if not yarp.Network.disconnect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not disconnect input_port_right_eye")
-        quit()
+        sys.exit("[ERROR] Could not disconnect input_port_right_eye")
 
     # close the ports
     screen_port.close()
@@ -156,8 +148,7 @@ def network_init_binocular():
     # network initialization and check
     yarp.Network.init()
     if not yarp.Network.checkNetwork():
-        print("[error] Please try running yarp server")
-        quit()
+        sys.exit('[ERROR] Please try running yarp server')
 
     # Initialization of all needed ports
 
@@ -165,15 +156,13 @@ def network_init_binocular():
     input_port_right_eye = yarp.Port()
     input_port_right_eye.open("/eyes/right")
     if not yarp.Network.connect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not connect right eye port")
-        quit()
+        sys.exit("[ERROR] Could not connect right eye port")
 
     # Port for left eye image
     input_port_left_eye = yarp.Port()
     input_port_left_eye.open("/eyes/left")
     if not yarp.Network.connect("/icubSim/cam/left", "/eyes/left"):
-        print("[error] Could not connect left eye port")
-        quit()
+        sys.exit("[ERROR] Could not connect left eye port")
 
     return input_port_right_eye, input_port_left_eye
 
@@ -189,11 +178,10 @@ def network_clean_binocular(port_right_eye, port_left_eye):
     '''
     # disconnect the ports
     if not yarp.Network.disconnect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not disconnect right eye port")
-        quit()
+        sys.exit("[ERROR] Could not disconnect right eye port")
+
     if not yarp.Network.disconnect("/icubSim/cam/left", "/eyes/left"):
-        print("[error] Could not disconnect left eye port")
-        quit()
+        sys.exit("[ERROR] Could not disconnect left eye port")
 
     # close the ports
     port_right_eye.close()
@@ -215,8 +203,7 @@ def network_init_monocular():
     # network initialization and check
     yarp.Network.init()
     if not yarp.Network.checkNetwork():
-        print("[error] Please try running yarp server")
-        quit()
+        sys.exit('[ERROR] Please try running yarp server')
 
     # Initialization of all needed ports
 
@@ -224,8 +211,7 @@ def network_init_monocular():
     input_port_right_eye = yarp.Port()
     input_port_right_eye.open("/eyes/right")
     if not yarp.Network.connect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not connect right eye port")
-        quit()
+        sys.exit("[ERROR] Could not connect right eye port")
 
     return input_port_right_eye
 
@@ -241,8 +227,7 @@ def network_clean_monocular(port_right_eye):
     '''
     # disconnect the ports
     if not yarp.Network.disconnect("/icubSim/cam/right", "/eyes/right"):
-        print("[error] Could not disconnect right eye port")
-        quit()
+        sys.exit("[ERROR] Could not disconnect right eye port")
 
     # close the ports
     port_right_eye.close()

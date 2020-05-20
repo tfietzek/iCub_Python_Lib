@@ -6,9 +6,11 @@ Created on Thu Apr 13 15:16:32 2018
 library for YARP image processing functions
 """
 
+import time
+
 import numpy as np
 import yarp
-import time
+
 
 ####################################################
 ######### Initialization of the eye images #########
@@ -122,10 +124,9 @@ def show_image(screen_port, image):
     params: screen_port     -- input port of the screen
             image           -- image to be shown on the screen
     '''
-    # show the image on the screen 
+    # show the image on the screen
 #    time_transfer = time.time()
     screen_port.write(image)
     time.sleep(0.03)
 #    time_transfer = time.time() - time_transfer
     # print 'time transfer image to screen:', round(time_transfer, 4)
-

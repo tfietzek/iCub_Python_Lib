@@ -7,6 +7,7 @@
 """
 
 import collections
+
 import numpy as np
 import yarp
 
@@ -125,9 +126,9 @@ class WorldController:
             # Internal object IDs are shared among all types of objects and start from 0;
             # they are essentially indices of the self._objects sequence
             return len(self._objects) - 1
-        else:
-            print('error')
-            return -1  # error
+
+        print('ERROR: Object creation failed!')
+        return -1  # error
 
     ########################################################
     ########### move object inside the simulator ###########
@@ -200,8 +201,8 @@ class WorldController:
         if result.size() == 3:
             # 3-element list with xyz coordinates
             return np.array([result.get(i).asDouble() for i in range(3)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ########## rotate object inside the simulator ##########
@@ -273,8 +274,8 @@ class WorldController:
         if result.size() == 3:
             # 3-element list with xyz angles
             return np.array([result.get(i).asDouble() for i in range(3)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
 ########################################################
 ########### model creation and manipulation ############
@@ -282,7 +283,6 @@ class WorldController:
 
     ########################################################
     ########### load 3D model into the simulator ###########
-
     def _prepare_create_command_model(self, m_type, model, texture, location):
         """
             Prepare an RPC command for importing a model in the simulator environment.
@@ -330,8 +330,9 @@ class WorldController:
             # Internal model IDs are shared among all models and start from 0;
             # they are essentially indices of the self._models sequence
             return len(self._models) - 1
-        else:
-            return -1  # error
+
+        print("ERROR: Model import failed!")
+        return -1  # error
 
     ########################################################
     ########### move model inside the simulator ############
@@ -402,8 +403,8 @@ class WorldController:
         if result.size() == 3:
             # 3-element list with xyz coordinates
             return np.array([result.get(i).asDouble() for i in range(3)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ########## rotate model inside the simulator ###########
@@ -475,8 +476,8 @@ class WorldController:
         if result.size() == 3:
             # 3-element list with xyz angles
             return np.array([result.get(i).asDouble() for i in range(3)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ######### get path to model and texture files ##########
@@ -502,8 +503,8 @@ class WorldController:
         result = self._execute(self._prepare_get_path_command_model())
         if result.size() == 1:
             return result.get(0).asString()  # path to model and texture files
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ######### set path to model and texture files ##########
@@ -569,8 +570,8 @@ class WorldController:
         if result.size() == 3:
             # 3-element list with xyz coordinates
             return np.array([result.get(i).asDouble() for i in range(3)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ################# get screen position ##################
@@ -597,8 +598,8 @@ class WorldController:
         if result.size() == 3:
             # 3-element list with xyz coordinates
             return np.array([result.get(i).asDouble() for i in range(3)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ################# set screen position ##################

@@ -6,15 +6,18 @@ Created on Thu Apr 13 15:16:32 2018
 library for functions related to the motor control
 """
 
+import time
+
 import numpy as np
 import yarp
-import time
 
 ######################################################################
 ######################### init motor control #########################
+
+
 def motor_init(part, robot_prefix="icubSim", client_prefix="client"):
     '''
-    initialize motor control for the given part 
+    initialize motor control for the given part
 
     params: part    -- part of the iCub to be controlled (string: head, left_arm, right_arm, ...)
 
@@ -25,22 +28,22 @@ def motor_init(part, robot_prefix="icubSim", client_prefix="client"):
     '''
     # prepare a property object
     props = yarp.Property()
-    props.put("device","remote_controlboard")
-    props.put("local","/" + client_prefix + "/" + part)
-    props.put("remote","/" + robot_prefix + "/" + part)
+    props.put("device", "remote_controlboard")
+    props.put("local", "/" + client_prefix + "/" + part)
+    props.put("remote", "/" + robot_prefix + "/" + part)
 
     # create remote driver
-    Driver = yarp.PolyDriver(props)
+    driver = yarp.PolyDriver(props)
 
-    #query motor control interfaces
-    iPos = Driver.viewIPositionControl()
-    iEnc = Driver.viewIEncoders()
-    
-    #retrieve number of joints
-    jnts=iPos.getAxes()
+    # query motor control interfaces
+    iPos = driver.viewIPositionControl()
+    iEnc = driver.viewIEncoders()
+
+    # retrieve number of joints
+    jnts = iPos.getAxes()
 
     print('----- Controlling', jnts, 'joints -----')
-    return iPos, iEnc, jnts, Driver
+    return iPos, iEnc, jnts, driver
 
 
 ######################################################################
@@ -54,11 +57,12 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
             jnts_head   -- number of head joints
     '''
     zero_pos = set_pos_vector_same(0.0, jnts_head)
-    iPos_head.positionMove(zero_pos.data()) 
+    iPos_head.positionMove(zero_pos.data())
     motion = False
     while not motion:
         act_pos = get_joint_position(iEnc_head, jnts_head)
-        motion = iPos_head.checkMotionDone() and (abs(act_pos[4]) < (abs(zero_pos[4]) + 0.2))
+        motion = iPos_head.checkMotionDone() and (
+            abs(act_pos[4]) < (abs(zero_pos[4]) + 0.2))
 
 
 ######################################################################
@@ -73,7 +77,7 @@ def goto_position_block(iPos, iEnc, jnts, position):
             position    -- new position as YARP-Vector
     '''
 
-    iPos.positionMove(position.data()) 
+    iPos.positionMove(position.data())
     motion = False
     while not motion:
         act_pos = get_joint_position(iEnc, jnts)
@@ -124,26 +128,26 @@ def get_joint_position(iEnc, jnts):
 
 ######################################################################
 ############# set YARP position vector with given values #############
-def set_pos_vector(pos_vec, a, b, c, d, e, f):
+def set_pos_vector(pos_vec, val_j0, val_j1, val_j2, val_j3, val_j4, val_j5):
     '''
     set position vector with given values for each joint (6 joints like iCub head)
 
     params: pos_vec     -- YARP position vector
-            a           -- value joint 0, double value
-            b           -- value joint 1, double value
-            c           -- value joint 2, double value
-            d           -- value joint 3, double value
-            e           -- value joint 4, double value
-            f           -- value joint 5, double value
+            val_j0      -- value joint 0, double value
+            val_j1      -- value joint 1, double value
+            val_j2      -- value joint 2, double value
+            val_j3      -- value joint 3, double value
+            val_j4      -- value joint 4, double value
+            val_j5      -- value joint 5, double value
 
     return: pos_vec     -- position as YARP vector
     '''
-    pos_vec.set(0, a)
-    pos_vec.set(1, b)
-    pos_vec.set(2, c)
-    pos_vec.set(3, d)
-    pos_vec.set(4, e)
-    pos_vec.set(5, f)
+    pos_vec.set(0, val_j0)
+    pos_vec.set(1, val_j1)
+    pos_vec.set(2, val_j2)
+    pos_vec.set(3, val_j3)
+    pos_vec.set(4, val_j4)
+    pos_vec.set(5, val_j5)
 
     return pos_vec
 
@@ -159,26 +163,26 @@ def set_pos_vector_array(position, jnts):
     '''
     pos_vec = yarp.Vector(jnts)
 
-    for x in range(jnts):
-        pos_vec.set(x, position[x])
-    
+    for j in range(jnts):
+        pos_vec.set(j, position[j])
+
     return pos_vec
 
 
-def set_pos_vector_same(a, jnts):
+def set_pos_vector_same(value, jnts):
     '''
     set position vector with one value for all joints
 
     params: pos_vec     -- position vector
-            a           -- value for all joints, double value
+            value       -- value for all joints, double value
             jnts        -- number of joints
 
     return: pos_vec     -- position as YARP vector
     '''
     pos_vec = yarp.Vector(jnts)
 
-    for x in range(0, jnts):
-        pos_vec.set(x, a)
+    for j in range(0, jnts):
+        pos_vec.set(j, value)
 
     return pos_vec
 
@@ -189,7 +193,7 @@ def npvec_2_yarpvec(array):
     '''
     convert a 1D numpy array into a YARP vector
 
-    params: array       -- 1D array-like position vector 
+    params: array       -- 1D array-like position vector
 
     return: yarp_vec    -- YARP vector, result of conversion
     '''
@@ -198,20 +202,21 @@ def npvec_2_yarpvec(array):
 
     for i in range(vector.shape[0]):
         yarp_vec.set(i, vector[i])
-    
+
     return yarp_vec
+
 
 def yarpvec_2_npvec(yarp_vec):
     '''
-    convert a YARP vector into a 1D numpy array 
+    convert a YARP vector into a 1D numpy array
 
     params: yarp_vec    -- 1D YARP vector
 
-    return: vector      -- 1D Numpy array, result of conversion 
+    return: vector      -- 1D Numpy array, result of conversion
     '''
     vector = np.zeros(yarp_vec.length(), dtype=np.float64)
 
     for i in range(yarp_vec.length()):
         vector[i] = yarp_vec.get(i)
-    
+
     return vector

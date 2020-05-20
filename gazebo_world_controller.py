@@ -6,7 +6,7 @@
     This is extended with model import/manipulation, get hand position and screen movement.
 """
 
-import collections
+
 import numpy as np
 import yarp
 
@@ -20,6 +20,8 @@ yarp.Network.init()  # Initialise YARP
 """
 
 ########################################################
+
+
 class WorldController:
     """Class for controlling iCub simulator via its RPC world port."""
 
@@ -28,7 +30,6 @@ class WorldController:
         self._port_name = "/WorldController_" + str(id(self)) + "/commands"
         self._rpc_client.open(self._port_name)
         self._rpc_client.addOutput("/world_input_port")
-
 
     def _execute(self, cmd):
         """Execute an RPC command, returning obtained answer bottle."""
@@ -49,7 +50,8 @@ class WorldController:
 
     def del_all(self):
         """Delete all objects and models from the simulator"""
-        result = self._is_success(self._execute(self._prepare_del_all_command()))
+        result = self._is_success(self._execute(
+            self._prepare_del_all_command()))
 
         return result
 
@@ -116,14 +118,15 @@ class WorldController:
         else:
             print("Error: No correct object identifier given!")
             return -1
-        
-        cmd = self._prepare_create_obj_command(obj_func, size, location, orientation, color)
+
+        cmd = self._prepare_create_obj_command(
+            obj_func, size, location, orientation, color)
         ans = self._execute(cmd)
         if ans.toString() == "[fail]":
-            print('error')
-            return ""  # error
-        else:
-            return ans.toString()
+            print('Error: Object creation failed!')
+            return None  # error
+
+        return ans.toString()
 
     ########################################################
     ######### set object pose inside the simulator #########
@@ -195,8 +198,8 @@ class WorldController:
         if result.size() == 6:
             # 6-element list with xyz coordinates
             return np.array([result.get(i).asDouble() for i in range(6)])
-        else:
-            return None  # An error occured
+
+        return None  # An error occured
 
     ########################################################
     ######### set object name inside the simulator #########
@@ -218,17 +221,18 @@ class WorldController:
 
     def set_name(self, obj_id, new_name):
         """
-            !!! not fully implemented in gazebo !!! 
+            !!! not fully implemented in gazebo !!!
             Set a new name for the given object.
 
             Parameters:
                 obj_id      -- internal model ID to reference the object
-                new_name    -- 
+                new_name    --
 
             Returns:
                 True/False dependent on success/failure.
         """
-        result = self._is_success(self._execute(self._prepare_set_name_command_obj(obj_id, new_name)))
+        result = self._is_success(self._execute(
+            self._prepare_set_name_command_obj(obj_id, new_name)))
         return result, new_name
 
     ########################################################
@@ -258,7 +262,7 @@ class WorldController:
 
             Parameters:
                 obj_id      -- internal model ID to reference the object
-                new_color   -- 
+                new_color   --
 
             Returns:
                 True/False dependent on success/failure.
@@ -331,7 +335,6 @@ class WorldController:
         """
         return self._is_success(self._execute(self._prepare_enable_collision_command_obj(obj_id, enable)))
 
-
     ########################################################
     ############## get list with object names ##############
     def _prepare_get_list_command_obj(self):
@@ -361,9 +364,8 @@ class WorldController:
         result = self._execute(self._prepare_get_list_command_obj())
         if result.size() < 1 or result.get(0).toString() == "[fail]":
             return None  # An error occured
-        else:
-            return result.pop().toString().split(' ')
 
+        return result.pop().toString().split(' ')
 
     ########################################################
     ####### delete a single Object in the simulator #######
@@ -394,19 +396,18 @@ class WorldController:
                 True/False dependent on success/failure.
 
         """
-        result = self._is_success(self._execute(self._prepare_del_object_command_obj(obj_id)))
+        result = self._is_success(self._execute(
+            self._prepare_del_object_command_obj(obj_id)))
         return result
-
 
     ########################################################
     ########### load 3D model into the simulator ###########
-
     def _prepare_create_model_command_model(self, filename, location, orientation):
         """
             Prepare an RPC command for importing a model in the simulator environment.
 
             Parameters:
-                filename    -- absolute path to the model 
+                filename    -- absolute path to the model
                 location    -- coordinates of the object location, [ x, y, z ]
                 orientation -- object rotation in rad
 
@@ -426,25 +427,25 @@ class WorldController:
             Import a model from a sdf file.
 
             Parameters:
-                filename    -- absolute path to the model 
+                filename    -- absolute path to the model
                 location    -- coordinates of the object location, [ x, y, z ]
                 orientation -- object rotation in rad
 
             Returns:
                 internal model ID to reference the model or "" on error
         """
-        cmd = self._prepare_create_model_command_model(filename, location, orientation)
+        cmd = self._prepare_create_model_command_model(
+            filename, location, orientation)
         ans = self._execute(cmd)
         print(ans.toString())
         if ans.toString() == "[fail]":
             print('error')
-            return ""  # error
-        else:
-            return ans.toString()
+            return None  # error
 
+        return ans.toString()
 
-########################################################
-################### call destructor ####################
+    ########################################################
+    ################### call destructor ####################
     def __del__(self):
         try:
             if self._rpc_client is not None:
