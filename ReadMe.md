@@ -14,7 +14,7 @@ It is organized in Python "libraries":
     - Methods to control the world port in the iCubSim-simulator (e.g. import simple objects)  
     
 5. plot_image_processing.py
-    - Methods to plot matrices with OpneCV or Matplotlib  
+    - Methods to plot matrices with OpenCV or Matplotlib  
     
 6. YARP_image_processing.py
     - Image processing in the YARP-Network flow, e.g. prepare numpy arrays for receiving images from the iCub  
