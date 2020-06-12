@@ -9,7 +9,7 @@
 
 import os
 
-model_path = os.path.abspath("./sim_environment/new_models")
+model_path = os.path.abspath("../../iCub_simulator_tools/iCubSim_environment/new_models")
 
 ################################################################
 ############### model description for simple pen ###############
