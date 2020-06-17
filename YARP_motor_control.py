@@ -39,7 +39,7 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     if control == "position":
         iCtrl = driver.viewIPositionControl()
     elif control == "velocity":
-        iCtrl = Driver.viewIVelocityControl()
+        iCtrl = driver.viewIVelocityControl()
     iEnc = driver.viewIEncoders()
 
     # retrieve number of joints
@@ -120,15 +120,42 @@ def get_joint_position(iEnc, jnts):
     '''
         get position of controlled joints
 
-        params: iEnc    -- Encoder for the controlled joints
-                jnts    -- number of joints
+        params: iEnc        -- Encoder for the controlled joints
+                jnts        -- number of joints
 
-        return: encs    -- YARP-Vector containing the joint positions
+        return: yarp_angles -- YARP-Vector containing the joint positions
     '''
     # read encoders
-    encs = yarp.Vector(jnts)
-    iEnc.getEncoders(encs.data())
-    return encs
+    yarp_angles = yarp.Vector(jnts)
+    read = False
+    read = iEnc.getEncoders(yarp_angles.data())
+    while not read:
+        time.sleep(0.1)
+        read = iEnc.getEncoders(yarp_angles.data())
+    return yarp_angles
+
+
+######################################################################
+################## map motor control to dictionary ###################
+def create_motor_dict(parts_used):
+    joint_mapping = {}
+    ctrl_interfaces = {}
+    motor_driver = []
+    sequence = {"head": 6, "torso": 3, "right_arm": 16, "right_leg": 6, "left_arm": 16, "left_leg": 6}
+    j = 0
+    for key in sequence:
+        if key in parts_used:
+            iCtrl, iEnc, jnts, driver = motor_init(key, client_prefix="CPG")
+            if jnts != sequence[key]:
+                print("Error while motor initialization of part:", key)
+                break
+            motor_driver.append((key, driver))
+            for i in range(j, j + sequence[key]):
+                joint_mapping[str(i)] = key
+                ctrl_interfaces[key] = (iCtrl, iEnc, jnts)
+            j += sequence[key]
+    return joint_mapping, ctrl_interfaces, motor_driver
+
 
 
 ######################################################################
