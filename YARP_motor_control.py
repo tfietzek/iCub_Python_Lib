@@ -35,6 +35,10 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     # create remote driver
     driver = yarp.PolyDriver(props)
 
+    if driver == None:
+        print("Error: Motor initialization failed!")
+        return None, None, None, None
+
     # query motor control interfaces
     if control == "position":
         iCtrl = driver.viewIPositionControl()
@@ -82,11 +86,9 @@ def goto_position_block(iPos, iEnc, jnts, position):
     '''
 
     iPos.positionMove(position.data())
-    motion = False
-    while not motion:
+    while not iPos.checkMotionDone():
         act_pos = get_joint_position(iEnc, jnts)
         # and (abs(act_pos[4]) < (abs(new_pos[4]) + 0.2))
-        motion = iPos.checkMotionDone()
 
 
 ######################################################################

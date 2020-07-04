@@ -144,11 +144,11 @@ library for network functions
 </div><div class="memdoc">
 
 <p>yarp cleanup ################### </p>
-<pre class="fragment">disconnect and close all used ports and clean the network
+<pre class="fragment">    disconnect and close all used ports and clean the network
 
-return: screen_port         -- port to the screen in the iCub-simulator
-        port_right_eye      -- port to the iCub's right eye camera
-        port_left_eye       -- port to the iCub's left eye camera
+    return: screen_port         -- port to the screen in the iCub-simulator
+            port_right_eye      -- port to the iCub's right eye camera
+            port_left_eye       -- port to the iCub's left eye camera
 </pre> 
 </div>
 </div>
@@ -185,11 +185,11 @@ return: screen_port         -- port to the screen in the iCub-simulator
 </div><div class="memdoc">
 
 <p>yarp cleanup ################### </p>
-<pre class="fragment">disconnect and close all given ports and clean the network
+<pre class="fragment">    disconnect and close all given ports and clean the network
 
-parameter: port_right_eye      -- port to the iCub's right eye camera
-           port_left_eye       -- port to the iCub's left eye camera
-           robot_name  -- YARP-port robot prefix; default: "icubSim"
+    parameter: port_right_eye   -- port to the iCub's right eye camera
+            port_left_eye    -- port to the iCub's left eye camera
+            robot_name       -- YARP-port robot prefix; default: "icubSim"
 </pre> 
 </div>
 </div>
@@ -220,10 +220,11 @@ parameter: port_right_eye      -- port to the iCub's right eye camera
 </div><div class="memdoc">
 
 <p>yarp cleanup ################### </p>
-<pre class="fragment">disconnect and close all given ports and clean the network
+<pre class="fragment">    disconnect and close all given ports and clean the network
 
-parameter:  input_port_eye      -- port to the selected iCub's eye camera
-            robot_name          -- YARP-port robot prefix; default: "icubSim"</pre> 
+    parameter:  input_port_eye      -- port to the selected iCub's eye camera
+                robot_name          -- YARP-port robot prefix; default: "icubSim"
+</pre> 
 </div>
 </div>
 <a id="a51c0b5d63ec516815b23298c626f5348"></a>
@@ -253,10 +254,10 @@ parameter:  input_port_eye      -- port to the selected iCub's eye camera
 </div><div class="memdoc">
 
 <p>yarp cleanup, only right eye ########### </p>
-<pre class="fragment">disconnect and close all used ports and clean the network
+<pre class="fragment">    disconnect and close all used ports and clean the network
 
-parameter:  screen_port         -- port to the screen in the iCub-simulator
-            port_right_eye      -- port to the iCub's right eye camera
+    parameter:  screen_port         -- port to the screen in the iCub-simulator
+                port_right_eye      -- port to the iCub's right eye camera
 </pre> 
 </div>
 </div>
@@ -287,10 +288,10 @@ parameter:  screen_port         -- port to the screen in the iCub-simulator
 </div><div class="memdoc">
 
 <p>yarp cleanup ################### </p>
-<pre class="fragment">disconnect and close  used ports and clean the network
+<pre class="fragment">    disconnect and close  used ports and clean the network
 
-parameter:  screen_port     -- port to the screen in the iCub-simulator
-            robot_name      -- YARP-port robot prefix; default: "icubSim"
+    parameter:  screen_port     -- port to the screen in the iCub-simulator
+                robot_name      -- YARP-port robot prefix; default: "icubSim"
 </pre> 
 </div>
 </div>
@@ -321,13 +322,13 @@ parameter:  screen_port     -- port to the screen in the iCub-simulator
 </div><div class="memdoc">
 
 <p>general cases ################### </p>
-<p>binocular usecase ################# network and port initialization ########## </p><pre class="fragment">initialize the yarp network and generate the ports for both iCub's eye cameras
+<p>binocular usecase ################# network and port initialization ########## </p><pre class="fragment">    initialize the yarp network and generate the ports for both iCub's eye cameras
 
-parameter: client_name -- YARP-port client prefix; default: "client"
-           robot_name  -- YARP-port robot prefix; default: "icubSim"
+    parameter: client_name -- YARP-port client prefix; default: "client"
+            robot_name  -- YARP-port robot prefix; default: "icubSim"
 
-return: input_port_right_eye    -- port to the iCub's right eye camera
-        input_port_left_eye     -- port to the iCub's left eye camera
+    return: input_port_right_eye    -- port to the iCub's right eye camera
+            input_port_left_eye     -- port to the iCub's left eye camera
 </pre> 
 </div>
 </div>
@@ -364,13 +365,13 @@ return: input_port_right_eye    -- port to the iCub's right eye camera
 </div><div class="memdoc">
 
 <p>monocular usecase ################# </p>
-<p>network and port initialization ########## </p><pre class="fragment">initialize the yarp network and generate the port for one iCub eye camera
+<p>network and port initialization ########## </p><pre class="fragment">    initialize the yarp network and generate the port for one iCub eye camera
 
-parameter: eye         -- port to the selected iCub's eye camera
-           client_name -- YARP-port client prefix; default: "client"
-           robot_name  -- YARP-port robot prefix; default: "icubSim"
+    parameter: eye         -- port to the selected iCub's eye camera
+            client_name -- YARP-port client prefix; default: "client"
+            robot_name  -- YARP-port robot prefix; default: "icubSim"
 
-return: input_port_eye    -- port to the selected iCub's eye camera
+    return: input_port_eye    -- port to the selected iCub's eye camera
 </pre> 
 </div>
 </div>
@@ -401,12 +402,12 @@ return: input_port_eye    -- port to the selected iCub's eye camera
 </div><div class="memdoc">
 
 <p>simulator screen ################# </p>
-<p>network and port initialization ########## </p><pre class="fragment">initialize the yarp network and generate the port for the iCub-simulator screen 
+<p>network and port initialization ########## </p><pre class="fragment">    initialize the yarp network and generate the port for the iCub-simulator screen 
 
-parameter: client_name -- YARP-port client prefix; default: "client"
-           robot_name  -- YARP-port robot prefix; default: "icubSim"
+    parameter:  client_name     -- YARP-port client prefix; default: "client"
+                robot_name      -- YARP-port robot prefix; default: "icubSim"
 
-return: output_port_screen      -- port to the screen in the iCub-simulator
+    return: output_port_screen  -- port to the screen in the iCub-simulator
 </pre> 
 </div>
 </div>
@@ -426,11 +427,11 @@ return: output_port_screen      -- port to the screen in the iCub-simulator
 </div><div class="memdoc">
 
 <p>special cases ################### </p>
-<p>network and port initialization ########## </p><pre class="fragment">initialize the yarp network and generate the ports for the simulator screen and both iCub's eye cameras
+<p>network and port initialization ########## </p><pre class="fragment">    initialize the yarp network and generate the ports for the simulator screen and both iCub's eye cameras
 
-return: output_port_screen      -- port to the screen in the iCub-simulator
-        input_port_right_eye    -- port to the iCub's right eye camera
-        input_port_left_eye     -- port to the iCub's left eye camera
+    return: output_port_screen      -- port to the screen in the iCub-simulator
+            input_port_right_eye    -- port to the iCub's right eye camera
+            input_port_left_eye     -- port to the iCub's left eye camera
 </pre> 
 </div>
 </div>
@@ -450,10 +451,10 @@ return: output_port_screen      -- port to the screen in the iCub-simulator
 </div><div class="memdoc">
 
 <p>network and port initialization, only right eye ## </p>
-<pre class="fragment">initialize the yarp network and generate the ports for the simulator screen and the iCub's right eye camera
+<pre class="fragment">    initialize the yarp network and generate the ports for the simulator screen and the iCub's right eye camera
 
-return: output_port_screen      -- port to the screen in the iCub-simulator
-        input_port_right_eye    -- port to the iCub's right eye camera
+    return: output_port_screen      -- port to the screen in the iCub-simulator
+            input_port_right_eye    -- port to the iCub's right eye camera
 </pre> 
 </div>
 </div>
