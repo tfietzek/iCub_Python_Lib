@@ -25,6 +25,8 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
                 iEnc    -- Encoder for the controlled joints
                 jnts    -- number of controlled joints
                 driver  -- device driver; need to be returned, otherwise joint controlboard is closed
+
+                Returns None for all if an error occured
     '''
     # prepare a property object
     props = yarp.Property()
@@ -45,6 +47,10 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     elif control == "velocity":
         iCtrl = driver.viewIVelocityControl()
     iEnc = driver.viewIEncoders()
+
+    if iCtrl == None:
+        print("Error: Motor initialization failed!")
+        return None, None, None, None
 
     # retrieve number of joints
     jnts = iCtrl.getAxes()
@@ -118,14 +124,16 @@ def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0.0):
 
 ######################################################################
 ###################### get the joints positions ######################
-def get_joint_position(iEnc, jnts):
+def get_joint_position(iEnc, jnts, as_np=False):
     '''
         get position of controlled joints
 
         params: iEnc        -- Encoder for the controlled joints
                 jnts        -- number of joints
+                as_np       -- if True: a numpy array is returned
+                                  False: a YARP vector is returned
 
-        return: yarp_angles -- YARP-Vector containing the joint positions
+        return: vector containing the joint positions -> YARP-Vector or numpy array dependent on as_np
     '''
     # read encoders
     yarp_angles = yarp.Vector(jnts)
@@ -134,12 +142,25 @@ def get_joint_position(iEnc, jnts):
     while not read:
         time.sleep(0.1)
         read = iEnc.getEncoders(yarp_angles.data())
+    if as_np:
+        return yarpvec_2_npvec(yarp_angles)
     return yarp_angles
 
 
 ######################################################################
 ################## map motor control to dictionary ###################
 def create_motor_dict(parts_used):
+    '''
+        wrap the motor control interfaces in a dictionary for a given set of robot parts
+        (Used to connect the CPG to the iCub)
+
+        params: parts_used      -- list with strings for the used robot parts
+
+        return: joint_mapping   -- mapping of the part joint numbers to a sequence containing all joints
+                ctrl_interfaces -- dictionary for all control interfaces
+                motor_driver    -- list with all created device drivers
+    '''
+
     joint_mapping = {}
     ctrl_interfaces = {}
     motor_driver = []
@@ -148,16 +169,17 @@ def create_motor_dict(parts_used):
     for key in sequence:
         if key in parts_used:
             iCtrl, iEnc, jnts, driver = motor_init(key, client_prefix="CPG")
-            if jnts != sequence[key]:
-                print("Error while motor initialization of part:", key)
-                break
-            motor_driver.append((key, driver))
-            for i in range(j, j + sequence[key]):
-                joint_mapping[str(i)] = key
-                ctrl_interfaces[key] = (iCtrl, iEnc, jnts)
-            j += sequence[key]
-    return joint_mapping, ctrl_interfaces, motor_driver
+            if not (driver == None):
+                if jnts != sequence[key]:
+                    print("Error while motor initialization of part:", key)
+                    break
+                motor_driver.append((key, driver))
+                for i in range(j, j + sequence[key]):
+                    joint_mapping[str(i)] = key
+                    ctrl_interfaces[key] = (iCtrl, iEnc, jnts)
+                j += sequence[key]
 
+    return joint_mapping, ctrl_interfaces, motor_driver
 
 
 ######################################################################
@@ -188,7 +210,7 @@ def set_pos_vector(pos_vec, val_j0, val_j1, val_j2, val_j3, val_j4, val_j5):
 
 def set_pos_vector_array(position, jnts):
     '''
-        set position vector with given values for each joint (e.g.6 joints for iCub head)
+        set position vector with given values for each joint (e.g. 6 joints for iCub head)
 
         params: position    -- position in array-like structure (list/numpy array), double values
                 jnts        -- number of joints
@@ -215,7 +237,7 @@ def set_pos_vector_same(value, jnts):
     '''
     pos_vec = yarp.Vector(jnts)
 
-    for j in range(0, jnts):
+    for j in range(jnts):
         pos_vec.set(j, value)
 
     return pos_vec
