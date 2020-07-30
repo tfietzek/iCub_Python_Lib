@@ -37,7 +37,7 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     # create remote driver
     driver = yarp.PolyDriver(props)
 
-    if driver == None:
+    if driver is None:
         print("Error: Motor initialization failed!")
         return None, None, None, None
 
@@ -48,7 +48,7 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
         iCtrl = driver.viewIVelocityControl()
     iEnc = driver.viewIEncoders()
 
-    if iCtrl == None:
+    if iCtrl is None:
         print("Error: Motor initialization failed!")
         return None, None, None, None
 
@@ -169,7 +169,7 @@ def create_motor_dict(parts_used):
     for key in sequence:
         if key in parts_used:
             iCtrl, iEnc, jnts, driver = motor_init(key, client_prefix="CPG")
-            if not (driver == None):
+            if not (driver is None):
                 if jnts != sequence[key]:
                     print("Error while motor initialization of part:", key)
                     break
