@@ -416,7 +416,7 @@ class WorldController:
         """
         result = yarp.Bottle()
         result.clear()
-        result.addString("loadModelFromFile")
+        result.addString("loadModelFromFileWithPose")
         result.addString(filename)
         list(map(result.addDouble, location))
         list(map(result.addDouble, orientation))
@@ -432,7 +432,7 @@ class WorldController:
                 orientation -- object rotation in rad
 
             Returns:
-                internal model ID to reference the model or "" on error
+                string as internal model ID to reference the model. In case of an error an empty string is returned
         """
         cmd = self._prepare_create_model_command_model(
             filename, location, orientation)
@@ -440,7 +440,7 @@ class WorldController:
         print(ans.toString())
         if ans.toString() == "[fail]":
             print('error')
-            return None  # error
+            return ""  # error
 
         return ans.toString()
 

@@ -72,6 +72,7 @@ def read_robot_eyes(port_right_eye, port_left_eye, right_eye_yarp_image, left_ey
             left_eye_yarp_image     -- yarp image for the left eye image
             right_eye_img_array     -- np array for the right eye image
             left_eye_img_array      -- np array for the left eye image
+            
     return: right_eye_img_array     -- np array now containing the right eye image
             left_eye_img_array      -- np array now containing the left eye image
     '''
@@ -101,7 +102,7 @@ def read_robot_eye(port_eye, eye_yarp_image, eye_img_array):
     return: eye_img_array   -- np array now containing the eye image
     '''
     # Read the images from the robot camera
-#    time_transfer = time.time()
+    # time_transfer = time.time()
     port_eye.read(eye_yarp_image)
     port_eye.read(eye_yarp_image)
     time.sleep(0.03)
@@ -109,8 +110,8 @@ def read_robot_eye(port_eye, eye_yarp_image, eye_img_array):
     if eye_yarp_image.getRawImage().__int__() != eye_img_array.__array_interface__['data'][0]:
         print("read() reallocated my yarp_image!")
 
-#    time_transfer = time.time() - time_transfer
-    # print 'time transfer image from iCub:', round(time_transfer, 4)
+    # time_transfer = time.time() - time_transfer
+    # print('time transfer image from iCub:', round(time_transfer, 4))
 
     return eye_img_array
 
@@ -125,8 +126,8 @@ def show_image(screen_port, image):
             image           -- image to be shown on the screen
     '''
     # show the image on the screen
-#    time_transfer = time.time()
+    # time_transfer = time.time()
     screen_port.write(image)
     time.sleep(0.03)
-#    time_transfer = time.time() - time_transfer
-    # print 'time transfer image to screen:', round(time_transfer, 4)
+    # time_transfer = time.time() - time_transfer
+    # print('time transfer image to screen:', round(time_transfer, 4))
