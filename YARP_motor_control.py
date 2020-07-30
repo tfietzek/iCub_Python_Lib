@@ -11,21 +11,30 @@ import time
 import numpy as np
 import yarp
 
+parts = {"head": True, "left_arm": False, "right_arm": False,
+         "torso": True, "right_leg": False, "left_leg": False}
 
 ######################################################################
-######################### init motor control #########################
+######################### Init motor control #########################
 def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="client"):
     '''
         initialize motor control for the given part
 
-        params: part        -- part of the iCub to be controlled (string: head, left_arm, right_arm, ...)
-                control     -- control type: position(default) -> joint angle control ; velocity -> joint velocity control
+        params: part            -- part of the iCub to be controlled (string: head, left_arm, right_arm, torso, right_leg, left_leg)
+                control         -- control type: position(default) -> joint angle control ; velocity -> joint velocity control
+                robot_prefix    -- robot name; normally "iCubSim" for simulation and "icub" for real robot
+                client_prefix   -- client name; normally no need to change; only if multiple user work in the same YARP-network
 
-        return: iPos    -- Position Controller for the given iCub part
-                iEnc    -- Encoder for the controlled joints
-                jnts    -- number of controlled joints
-                driver  -- device driver; need to be returned, otherwise joint controlboard is closed
+        return: iCtrl   -- Position/Velocity Controller for the given iCub part -> None in case of failure
+                iEnc    -- Encoder for the controlled joints -> None in case of failure
+                jnts    -- number of controlled joints -> None in case of failure
+                driver  -- device driver; need to be returned, otherwise joint controlboard is closed -> None in case of failure
     '''
+
+    if part not in parts:
+        print("Error: No correct part descriptor!")
+        return None, None, None, None
+
     # prepare a property object
     props = yarp.Property()
     props.put("device", "remote_controlboard")
@@ -51,6 +60,44 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
 
     print('----- Controlling', jnts, 'joints -----')
     return iCtrl, iEnc, jnts, driver
+
+
+def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", client_prefix="client"):
+    '''
+        initialize motor control for the given part
+
+        params: part            -- part of the iCub to be controlled (string: left_arm, right_arm, right_leg, left_leg)
+                ctrl_prior      -- control priority; either position or orientation of the end-effector (hand or foot)
+                robot_prefix    -- robot name; normally "iCubSim" for simulation and "icub" for real robot
+                client_prefix   -- client name; normally no need to change; only if multiple user work in the same YARP-network
+
+        return: iCart   -- Cartesian Controller for the given iCub part -> None in case of failure
+                driver  -- device driver; need to be returned, otherwise joint controlboard is closed -> None in case of failure
+    '''
+
+    if part not in parts or parts[part]:
+        print("Error: No correct part descriptor!")
+        return None, None
+
+    ##################### Prepare a property object ######################
+    props = yarp.Property()
+    props.put("device", "cartesiancontrollerclient")
+    props.put("remote", "/" + ROBOT_PREFIX + "/cartesianController/right_arm")
+    props.put("local", "/" + CLIENT_PREFIX + "/" + part)
+
+    ######################## Create remote driver ########################
+    driver = yarp.PolyDriver(props)
+
+    if driver == None:
+        print("Error: Motor initialization failed!")
+        return None, None
+
+    ################### Query motor control interfaces ###################
+    iCart = Driver_rarm.viewICartesianControl()
+    iCart.setPosePriority(ctrl_prior)
+    time.sleep(1)
+
+    return iCart, driver
 
 
 ######################################################################
@@ -129,7 +176,6 @@ def get_joint_position(iEnc, jnts):
     '''
     # read encoders
     yarp_angles = yarp.Vector(jnts)
-    read = False
     read = iEnc.getEncoders(yarp_angles.data())
     while not read:
         time.sleep(0.1)
@@ -143,7 +189,8 @@ def create_motor_dict(parts_used):
     joint_mapping = {}
     ctrl_interfaces = {}
     motor_driver = []
-    sequence = {"head": 6, "torso": 3, "right_arm": 16, "right_leg": 6, "left_arm": 16, "left_leg": 6}
+    sequence = {"head": 6, "torso": 3, "right_arm": 16,
+                "right_leg": 6, "left_arm": 16, "left_leg": 6}
     j = 0
     for key in sequence:
         if key in parts_used:
@@ -157,7 +204,6 @@ def create_motor_dict(parts_used):
                 ctrl_interfaces[key] = (iCtrl, iEnc, jnts)
             j += sequence[key]
     return joint_mapping, ctrl_interfaces, motor_driver
-
 
 
 ######################################################################
