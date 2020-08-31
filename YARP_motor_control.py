@@ -186,7 +186,7 @@ def get_joint_position(iEnc, jnts, as_np=False):
     yarp_angles = yarp.Vector(jnts)
     read = iEnc.getEncoders(yarp_angles.data())
     while not read:
-        time.sleep(0.1)
+        time.sleep(0.01)
         read = iEnc.getEncoders(yarp_angles.data())
     if as_np:
         return yarpvec_2_npvec(yarp_angles)
