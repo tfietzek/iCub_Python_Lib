@@ -40,9 +40,9 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     # prepare a property object
     props = yarp.Property()
     props.put("device", "remote_controlboard")
-    props.put("local", "/" + client_prefix + "/" + part)
+    props.put("local", "/" + client_prefix + "/" + control + "/" + part)
     props.put("remote", "/" + robot_prefix + "/" + part)
-
+    
     # create remote driver
     driver = yarp.PolyDriver(props)
 
@@ -89,7 +89,7 @@ def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", cl
     props = yarp.Property()
     props.put("device", "cartesiancontrollerclient")
     props.put("remote", "/" + robot_prefix + "/cartesianController/" + part)
-    props.put("local", "/" + client_prefix + "/" + part)
+    props.put("local", "/cart/" + client_prefix + "/" + part)
 
     ######################## Create remote driver ########################
     driver = yarp.PolyDriver(props)
