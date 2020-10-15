@@ -54,7 +54,7 @@ def define_eye_img():
 
     eye_yarp_image = yarp.ImageRgb()
     eye_yarp_image.resize(320, 240)
-    eye_yarp_image.setExternal2(
+    eye_yarp_image.setExternal(
         eye_img_array.data, eye_img_array.shape[1], eye_img_array.shape[0])
 
     return eye_yarp_image, eye_img_array
