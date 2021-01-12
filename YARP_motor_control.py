@@ -3,7 +3,7 @@ Created on Thu Apr 13 15:16:32 2018
 
 @author: Torsten Fietzek
 
-library for functions related to the motor control
+library containing functions related to the iCub motor control
 """
 
 import time
@@ -70,7 +70,8 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
 
 def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", client_prefix="client"):
     '''
-        initialize motor control for the given part
+        initialize cartesian controller for the given part
+        -> position needs to be given in robot reference frame
 
         params: part            -- part of the iCub to be controlled (string: left_arm, right_arm, right_leg, left_leg)
                 ctrl_prior      -- control priority; either position or orientation of the end-effector (hand or foot)
@@ -104,6 +105,42 @@ def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", cl
     time.sleep(1)
 
     return iCart, driver
+
+
+def gazectrl_init(client_prefix="client"):
+    '''
+        initialize gaze controller device
+        -> position needs to be given in robot reference frame
+
+        params: robot_prefix    -- robot name; normally "iCubSim" for simulation and "icub" for real robot
+                client_prefix   -- client name; normally no need to change; only if multiple user work in the same YARP-network
+
+        return: igaze   -- gaze controller interface
+                driver  -- device driver; need to be returned, otherwise joint controlboard is closed
+
+                Returns None for all if an error occured
+    '''
+
+    # prepare a property object
+    props = yarp.Property()
+    props.put("device", "gazecontrollerclient")
+    props.put("local", "/" + client_prefix + "/gazectrl")
+    props.put("remote", "/iKinGazeCtrl")
+    
+    # create remote driver
+    driver = yarp.PolyDriver(props)
+
+    if driver is None:
+        print("Error: Motor initialization failed!")
+        return None, None
+
+    print("open gaze controller")
+    if driver.isValid():
+        iGaze = driver.viewIGazeControl()
+    else:
+        return None, None
+
+    return iGaze, driver
 
 
 ######################################################################
