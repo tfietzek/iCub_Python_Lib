@@ -1,7 +1,7 @@
 """
 Created on Mon May 04 2020
 
-@author: tofo
+@author: Torsten Fietzek
 
 transformation matrices for the iCub and the Gazebo- and iCub-Simulator
 """

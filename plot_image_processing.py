@@ -1,7 +1,7 @@
 """
 Created on Thu Apr 13 15:16:32 2018
 
-@author: tofo
+@author: Torsten Fietzek
 
 library for image processing functions
 """

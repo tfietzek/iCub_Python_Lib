@@ -1,7 +1,7 @@
 """
 Created on Thu May 08 20:30:00 2019
 
-@author: Torsten Follak
+@author: Torsten Fietzek
 
 Script to import and control groups of models forming a complex object.
 """

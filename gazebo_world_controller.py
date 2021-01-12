@@ -1,5 +1,5 @@
 """
-    @author: Torsten Follak
+    @author: Torsten Fietzek
 
     Class to control the environment in the iCub simulator, for example simple object manipulation.
     The basis is given for object manipulation in: http://www.icub.org/software_documentation/icub_python_simworld_control.html (Marek Rucinski).

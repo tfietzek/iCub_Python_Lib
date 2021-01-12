@@ -1,7 +1,7 @@
 """
     Created on Thu May 02 03:55:00 2019
 
-    @author: Torsten Follak
+    @author: Torsten Fietzek
 
     This file set up the dictionaries for the model groups, containing model and texture names, model type, start position and orientation.
     The created models are a toy car, a simple pencil and a toy bear.
