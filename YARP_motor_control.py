@@ -42,7 +42,7 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     props.put("device", "remote_controlboard")
     props.put("local", "/" + client_prefix + "/" + control + "/" + part)
     props.put("remote", "/" + robot_prefix + "/" + part)
-    
+
     # create remote driver
     driver = yarp.PolyDriver(props)
 
@@ -126,7 +126,7 @@ def gazectrl_init(client_prefix="client"):
     props.put("device", "gazecontrollerclient")
     props.put("local", "/" + client_prefix + "/gazectrl")
     props.put("remote", "/iKinGazeCtrl")
-    
+
     # create remote driver
     driver = yarp.PolyDriver(props)
 
@@ -264,6 +264,17 @@ def create_motor_dict(parts_used):
                 j += sequence[key]
 
     return joint_mapping, ctrl_interfaces, motor_driver
+
+def gz_block_head(iGaze):
+    '''
+        block neck motion for gaze control
+
+        params: igaze   -- gaze controller interface
+
+        return: True/False dependent on success/failure
+    '''
+    return iGaze.blockNeckRoll() & iGaze.blockNeckYaw() & iGaze.blockNeckPitch()
+ 
 
 ######################################################################
 ############# set YARP position vector with given values #############
