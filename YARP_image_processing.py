@@ -72,7 +72,7 @@ def read_robot_eyes(port_right_eye, port_left_eye, right_eye_yarp_image, left_ey
             left_eye_yarp_image     -- yarp image for the left eye image
             right_eye_img_array     -- np array for the right eye image
             left_eye_img_array      -- np array for the left eye image
-            
+
     return: right_eye_img_array     -- np array now containing the right eye image
             left_eye_img_array      -- np array now containing the left eye image
     '''

@@ -95,7 +95,7 @@ def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", cl
     ######################## Create remote driver ########################
     driver = yarp.PolyDriver(props)
 
-    if driver == None:
+    if driver is None:
         print("Error: Motor initialization failed!")
         return None, None
 
@@ -253,7 +253,7 @@ def create_motor_dict(parts_used):
     for key in sequence:
         if key in parts_used:
             iCtrl, iEnc, jnts, driver = motor_init(key, client_prefix="CPG")
-            if not (driver is None):
+            if not driver is None:
                 if jnts != sequence[key]:
                     print("Error while motor initialization of part:", key)
                     break
@@ -274,7 +274,18 @@ def gz_block_head(iGaze):
         return: True/False dependent on success/failure
     '''
     return iGaze.blockNeckRoll() & iGaze.blockNeckYaw() & iGaze.blockNeckPitch()
- 
+
+
+def look_at_3Dpoint(iGaze, point_rrf):
+    '''
+        look at a given fixation point
+
+        params: iGaze       -- gaze controller interface
+                point_rrf   -- point coordinates in robot reference frame (list/numpy array)
+
+        return: True/False dependent on success/failure
+    '''
+    return iGaze.lookAtFixationPoint(npvec_2_yarpvec(point_rrf))
 
 ######################################################################
 ############# set YARP position vector with given values #############

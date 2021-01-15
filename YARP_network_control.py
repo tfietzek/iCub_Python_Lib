@@ -142,7 +142,7 @@ def network_clean_monocular(input_port_eye, robot_name="icubSim"):
 ######### network and port initialization ##########
 def network_init_screen(client_name="client", robot_name="icubSim"):
     '''
-        initialize the yarp network and generate the port for the iCub-simulator screen 
+        initialize the yarp network and generate the port for the iCub-simulator screen
 
         parameter:  client_name     -- YARP-port client prefix; default: "client"
                     robot_name      -- YARP-port robot prefix; default: "icubSim"
