@@ -1,14 +1,9 @@
 var searchData=
 [
-  ['network_5fclean_164',['network_clean',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a920ed7da03fe982c81d2aab3b735b6af',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5fclean_5fbinocular_165',['network_clean_binocular',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#aadbbf3a7c88b2ffbdb42aefef682c0a3',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5fclean_5fmonocular_166',['network_clean_monocular',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a6f4162205c442950774935ac8fa3401c',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5fclean_5fonly_5fright_167',['network_clean_only_right',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a51c0b5d63ec516815b23298c626f5348',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5fclean_5fscreen_168',['network_clean_screen',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a0956e2a04038ca46a1c9f77768ab2987',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5finit_5fbinocular_169',['network_init_binocular',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a62c2a831ddaedb34b661e1bab39a4cf6',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5finit_5fmonocular_170',['network_init_monocular',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a87d34ffc6fd18d0da56fd80e592e1548',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5finit_5fscreen_171',['network_init_screen',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#abd32668095be62ad6cf30b66901ec80a',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5finitial_172',['network_initial',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#a0e84f74878e2d74ddda0c3c818003d5e',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['network_5finitial_5fonly_5fright_173',['network_initial_only_right',['../namespaceiCub__Python__Lib_1_1YARP__network__control.html#ad14637cd8f3a548e976fcd0897b178bc',1,'iCub_Python_Lib::YARP_network_control']]],
-  ['npvec_5f2_5fyarpvec_174',['npvec_2_yarpvec',['../namespaceiCub__Python__Lib_1_1YARP__motor__control.html#a0000903ac45a4d90e551d4758df994dd',1,'iCub_Python_Lib::YARP_motor_control']]]
+  ['motor_5finit_164',['motor_init',['../namespaceiCub__Python__Lib_1_1YARP__motor__control.html#afeaa48ef8dee99e93b97ba521396b048',1,'iCub_Python_Lib::YARP_motor_control']]],
+  ['motor_5finit_5fcartesian_165',['motor_init_cartesian',['../namespaceiCub__Python__Lib_1_1YARP__motor__control.html#a0d78422c32c50e2e63a3f6e7dd8a7396',1,'iCub_Python_Lib::YARP_motor_control']]],
+  ['move_5feyes_166',['move_eyes',['../namespaceiCub__Python__Lib_1_1YARP__motor__control.html#a2ad75ba049fffa24a2ad0b802eac92ef',1,'iCub_Python_Lib::YARP_motor_control']]],
+  ['move_5fmodel_167',['move_model',['../classiCub__Python__Lib_1_1iCubSim__world__controller_1_1WorldController.html#ac12bdabfa879827a16a8d61830f20c88',1,'iCub_Python_Lib::iCubSim_world_controller::WorldController']]],
+  ['move_5fmodel_5fgroup_168',['move_model_group',['../classiCub__Python__Lib_1_1iCubSim__model__groups__control_1_1ModelGroup.html#ae3f30b5b0dfc46429aa0ef406f76b47b',1,'iCub_Python_Lib::iCubSim_model_groups_control::ModelGroup']]],
+  ['move_5fobject_169',['move_object',['../classiCub__Python__Lib_1_1iCubSim__world__controller_1_1WorldController.html#a7465902095683d3435eae7d915b0a37d',1,'iCub_Python_Lib::iCubSim_world_controller::WorldController']]]
 ];

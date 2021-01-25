@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['yarp_5fimage_5fprocessing_2epy_105',['YARP_image_processing.py',['../YARP__image__processing_8py.html',1,'']]],
-  ['yarp_5fmotor_5fcontrol_2epy_106',['YARP_motor_control.py',['../YARP__motor__control_8py.html',1,'']]],
-  ['yarp_5fnetwork_5fcontrol_2epy_107',['YARP_network_control.py',['../YARP__network__control_8py.html',1,'']]],
-  ['yarpvec_5f2_5fnpvec_108',['yarpvec_2_npvec',['../namespaceiCub__Python__Lib_1_1YARP__motor__control.html#afeaa19a07701f3672d5f0175691a5920',1,'iCub_Python_Lib::YARP_motor_control']]]
+  ['worldcontroller_107',['WorldController',['../classiCub__Python__Lib_1_1iCubSim__world__controller_1_1WorldController.html',1,'WorldController'],['../classiCub__Python__Lib_1_1gazebo__world__controller_1_1WorldController.html',1,'WorldController']]]
 ];
