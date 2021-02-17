@@ -155,8 +155,7 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
     '''
 
     zero_pos = set_pos_vector_same(0.0, jnts_head)
-    iPos_head.positionMove(zero_pos.data())
-    motion = False
+    motion = not iPos_head.positionMove(zero_pos.data())
     while not motion:
         act_pos = get_joint_position(iEnc_head, jnts_head)
         motion = iPos_head.checkMotionDone() and (
@@ -175,9 +174,10 @@ def goto_position_block(iPos, iEnc, jnts, position):
                 position    -- new position as YARP-Vector
     '''
 
-    iPos.positionMove(position.data())
-    while not iPos.checkMotionDone():
+    motion = not iPos.positionMove(position.data())
+    while not motion:
         act_pos = get_joint_position(iEnc, jnts)
+        motion = iPos.checkMotionDone()
         # and (abs(act_pos[4]) < (abs(new_pos[4]) + 0.2))
 
 
@@ -198,8 +198,7 @@ def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0.0):
     targ_pos.set(4, (eye_pos[1] - offset_h))
     targ_pos.set(5, eye_pos[2])
 
-    iPos_h.positionMove(targ_pos.data())
-    motion = False
+    motion = iPos_h.positionMove(targ_pos.data())
     while not motion:
         time.sleep(0.01)
         motion = iPos_h.checkMotionDone()
