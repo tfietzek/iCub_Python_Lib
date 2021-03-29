@@ -8,4 +8,5 @@
 # results
 *.npy
 
-
+# filesystem
+.directory

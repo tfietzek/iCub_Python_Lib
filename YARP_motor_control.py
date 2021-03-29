@@ -157,9 +157,8 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
     zero_pos = set_pos_vector_same(0.0, jnts_head)
     motion = not iPos_head.positionMove(zero_pos.data())
     while not motion:
-        act_pos = get_joint_position(iEnc_head, jnts_head)
-        motion = iPos_head.checkMotionDone() and (
-            abs(act_pos[4]) < (abs(zero_pos[4]) + 0.2))
+        act_pos = get_joint_position(iEnc_head, jnts_head, as_np=True)
+        motion = iPos_head.checkMotionDone() and ((np.abs(act_pos)).sum() < 0.2)
 
 
 ######################################################################
