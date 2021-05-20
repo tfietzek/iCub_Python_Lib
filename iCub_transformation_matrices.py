@@ -22,9 +22,9 @@ Transfermat_gazebo2iCubSim = np.array([ [  0.,  1., 0.,  0.0000 ],
 Transfermat_iCubSim2gazebo = np.linalg.inv(Transfermat_gazebo2iCubSim)
 
 ######## robot coordinate system <-> gazebo coordinate system ########
-Transfermat_robot2gazebo = np.array([   [ -1.,  0., 0., -0.0260 ],
+Transfermat_robot2gazebo = np.array([   [ -1.,  0., 0.,  0.0000 ],
                                         [  0., -1., 0.,  0.0000 ],
-                                        [  0.,  0., 1.,  0.5976 ],
+                                        [  0.,  0., 1.,  0.6000 ],
                                         [  0.,  0., 0.,  1.0000 ]])
 Transfermat_gazebo2robot = np.linalg.inv(Transfermat_robot2gazebo)
 

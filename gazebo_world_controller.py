@@ -310,7 +310,7 @@ class WorldController:
 
             Parameters:
                 obj_id      -- internal model ID to reference the object
-                enable      -- Integer -> >0 enable gravity; <=0 disable gravity
+                enable      -- Integer -> >0 enable collision; <=0 disable collision
 
             Returns:
                 yarp.Bottle with the command, ready to be sent to the rpc port of the simulator
@@ -328,7 +328,7 @@ class WorldController:
 
             Parameters:
                 obj_id      -- internal model ID to reference the object
-                enable      -- Integer -> >0 enable gravity; <=0 disable gravity
+                enable      -- Integer -> >0 enable collision; <=0 disable collision
 
             Returns:
                 True/False dependent on success/failure.

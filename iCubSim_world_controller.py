@@ -69,7 +69,7 @@ class WorldController:
 
     ########################################################
     ########## create object inside the simulator ##########
-    def _prepare_create_obj_command(self, obj, size, location, color):
+    def _prepare_create_obj_command(self, obj, size, location, color, collision):
         """
             Prepare an RPC command for creating an object in the simulator environment.
 
@@ -83,6 +83,7 @@ class WorldController:
                                 (s)cyl: [ radius, length ]
                 location    -- coordinates of the object location, [ x, y, z ]
                 color       -- object colour in RGB (normalised), [ r, g, b ]
+                collision   -- activate/deactivate object collision (1/0)
 
             Returns:
                 yarp.Bottle with the command, ready to be sent to the rpc port of the simulator
@@ -94,9 +95,10 @@ class WorldController:
         list(map(result.addDouble, size))
         list(map(result.addDouble, location))
         list(map(result.addDouble, color))
+        result.addInt(collision)
         return result
 
-    def create_object(self, obj, size, location, color):
+    def create_object(self, obj, size, location, color, collision=1):
         """
             Create an object of a specified type, size, location and colour, returning internal object ID or -1 on error.
 
@@ -108,11 +110,12 @@ class WorldController:
                                 (s)cyl: [ radius, length ]
                 location    -- coordinates of the object location, [ x, y, z ]
                 color       -- object color in RGB (values: [0...1]), [ r, g, b ]
+                collision   -- activate/deactivate object collision (1/0)
 
             Returns:
                 internal object ID to reference the object or -1 on error
         """
-        cmd = self._prepare_create_obj_command(obj, size, location, color)
+        cmd = self._prepare_create_obj_command(obj, size, location, color, collision)
 
         if self._is_success(self._execute(cmd)):
             # iCub simulator IDs start from 1
