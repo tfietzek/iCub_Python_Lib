@@ -434,10 +434,8 @@ class WorldController:
             Returns:
                 string as internal model ID to reference the model. In case of an error an empty string is returned
         """
-        cmd = self._prepare_create_model_command_model(
-            filename, location, orientation)
+        cmd = self._prepare_create_model_command_model(filename, location, orientation)
         ans = self._execute(cmd)
-        print(ans.toString())
         if ans.toString() == "[fail]":
             print('error')
             return ""  # error

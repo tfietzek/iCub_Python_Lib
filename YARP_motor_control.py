@@ -158,7 +158,10 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
     motion = not iPos_head.positionMove(zero_pos.data())
     while not motion:
         act_pos = get_joint_position(iEnc_head, jnts_head, as_np=True)
-        motion = iPos_head.checkMotionDone() and ((np.abs(act_pos)).sum() < 0.2)
+        motion = iPos_head.checkMotionDone()
+        #  and np.allclose(act_pos, yarpvec_2_npvec(zero_pos), atol=0.25)
+
+        # motion = iPos_head.checkMotionDone() and ((np.abs(act_pos)).sum() < 0.2)
 
 
 ######################################################################
@@ -175,9 +178,9 @@ def goto_position_block(iPos, iEnc, jnts, position):
 
     motion = not iPos.positionMove(position.data())
     while not motion:
-        act_pos = get_joint_position(iEnc, jnts)
-        motion = iPos.checkMotionDone()
-        # and (abs(act_pos[4]) < (abs(new_pos[4]) + 0.2))
+        act_pos = get_joint_position(iEnc, jnts, as_np=True)
+        motion = iPos.checkMotionDone() 
+        # and np.allclose(act_pos, yarpvec_2_npvec(position), atol=0.5)
 
 
 ######################################################################
@@ -263,6 +266,9 @@ def create_motor_dict(parts_used):
 
     return joint_mapping, ctrl_interfaces, motor_driver
 
+
+######################################################################
+####################### gazecontroller methods #######################
 def gz_block_head(iGaze):
     '''
         block neck motion for gaze control
@@ -283,7 +289,8 @@ def look_at_3Dpoint(iGaze, point_rrf):
 
         return: True/False dependent on success/failure
     '''
-    return iGaze.lookAtFixationPoint(npvec_2_yarpvec(point_rrf))
+    if iGaze.lookAtFixationPoint(npvec_2_yarpvec(point_rrf)):
+        iGaze.waitMotionDone(period=0.1, timeout=5.)
 
 ######################################################################
 ############# set YARP position vector with given values #############
