@@ -290,7 +290,10 @@ def look_at_3Dpoint(iGaze, point_rrf):
         return: True/False dependent on success/failure
     '''
     if iGaze.lookAtFixationPoint(npvec_2_yarpvec(point_rrf)):
-        iGaze.waitMotionDone(period=0.1, timeout=5.)
+        return iGaze.waitMotionDone(period=0.1, timeout=5.)
+    else:
+        print("Gaze controller failed!")
+        return False
 
 ######################################################################
 ############# set YARP position vector with given values #############
