@@ -203,6 +203,7 @@ def show_4Darray_matplot(plot_image, title, h_plot, v_plot):
             if (j + i * splot_img_count) < img_count:
                 plt.subplot(v_plot, h_plot, j + 1)
                 plt.imshow(plot_image[:, :, h_step, v_step].T, cmap='gray')
+                plt.colorbar()
                 plt.xticks([])
                 plt.yticks([])
             else:
