@@ -48,3 +48,19 @@ else:
 pos_hand_world_coord   = np.array([ -0.15, 0.8, 0.2, 1.0 ])             # in world coordinate system
 init_hand_pos_robot_rf = np.dot(Transfermat_iCubSim2robot, pos_hand_world_coord.reshape((4,1))) # in robot coordinate system
 orientation_robot_hand = np.array([ 0.0022, -0.993, -0.1178, 2.0423 ])  # in robot coordinate system
+
+def transform_position(pos, mat):
+    pos = np.array(pos)
+    if pos.shape[0] == 3:
+        shape = (1,)
+        if len(pos.shape) == 2:
+            if pos.shape[1] > 0:
+                shape = (1, pos.shape[1])
+        pos = np.concatenate((pos, np.array([1.]).reshape(shape)))
+        pos = pos.reshape((4,1))
+        return np.dot(mat, pos)[0:3,0]
+    elif pos.shape[0] == 4:
+        pos = pos.reshape((4,1))
+        return np.dot(mat, pos)[0:3,0]
+    else:
+        print("Check position vector dimension!", pos.shape)
