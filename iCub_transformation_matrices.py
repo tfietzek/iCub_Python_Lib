@@ -64,3 +64,12 @@ def transform_position(pos, mat):
         return np.dot(mat, pos)[0:3,0]
     else:
         print("Check position vector dimension!", pos.shape)
+
+def retrieve_world_transform(use_gazebo):
+    if use_gazebo:
+        Transfermat_robot2world = Transfermat_robot2gazebo
+        Transfermat_world2robot = Transfermat_gazebo2robot
+    else:
+        Transfermat_robot2world = Transfermat_robot2iCubSim
+        Transfermat_world2robot = Transfermat_iCubSim2robot
+    return Transfermat_robot2world, Transfermat_world2robot
