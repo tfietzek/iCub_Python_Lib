@@ -181,7 +181,7 @@ def show_signal(signals, disp, sig_key, opt, timestep, step):
 
 ####################################################
 ########## show 4D array with matplotlib ###########
-def show_4Darray_matplot(plot_image, title, h_plot, v_plot, save=False, save_dir=""):
+def show_4Darray_matplot(plot_image, title, h_plot, v_plot, save=False, save_dir="", save_type=".svg"):
     '''
     function to plot a 4D numpy array
 
@@ -215,7 +215,7 @@ def show_4Darray_matplot(plot_image, title, h_plot, v_plot, save=False, save_dir
         plt.suptitle(title)
         plt.tight_layout(pad=2.5, w_pad=0.5, h_pad=1.0)
         if save:
-            plt.savefig(save_dir + title.replace(" ", "_") + ".svg")
+            plt.savefig(save_dir + title.replace(" ", "_") + save_type)
             plt.close()
         else:
             plt.show()

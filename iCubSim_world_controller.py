@@ -41,7 +41,7 @@ class WorldController:
 
     def _is_success(self, ans):
         """Check if RPC call answer Bottle indicates successfull execution."""
-        return ans.size() == 1 and ans.get(0).asVocab() == 27503  # Vocab for '[ok]'
+        return ans.size() == 1 and ans.get(0).asVocab32() == 27503  # Vocab for '[ok]'
 
     def _prepare_del_all_command(self):
         """Prepare the "world del all" command bottle."""
@@ -92,10 +92,10 @@ class WorldController:
         result.clear()
 
         list(map(result.addString, ["world", "mk", obj]))
-        list(map(result.addDouble, size))
-        list(map(result.addDouble, location))
-        list(map(result.addDouble, color))
-        result.addInt(collision)
+        list(map(result.addFloat64, size))
+        list(map(result.addFloat64, location))
+        list(map(result.addFloat64, color))
+        result.addInt32(collision)
         return result
 
     def create_object(self, obj, size, location, color, collision=1):
@@ -150,8 +150,8 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "set", obj]))
-        result.addInt(obj_id)
-        list(map(result.addDouble, location))
+        result.addInt32(obj_id)
+        list(map(result.addFloat64, location))
         return result
 
     def move_object(self, obj_id, location):
@@ -184,7 +184,7 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "get", obj]))
-        result.addInt(obj_id)
+        result.addInt32(obj_id)
         return result
 
     def get_object_location(self, obj_id):
@@ -224,8 +224,8 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "rot", obj]))
-        result.addInt(obj_id)
-        list(map(result.addDouble, orientation))
+        result.addInt32(obj_id)
+        list(map(result.addFloat64, orientation))
         return result
 
     def rotate_object(self, obj_id, orientation):
@@ -258,7 +258,7 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "rot", obj]))
-        result.addInt(obj_id)
+        result.addInt32(obj_id)
         return result
 
     def get_object_orientation(self, obj_id):
@@ -302,7 +302,7 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "mk", m_type, model, texture]))
-        list(map(result.addDouble, location))
+        list(map(result.addFloat64, location))
         return result
 
     def create_model(self, m_type, model, texture, location):
@@ -353,8 +353,8 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "set", m_type]))
-        result.addInt(mod_id)
-        list(map(result.addDouble, location))
+        result.addInt32(mod_id)
+        list(map(result.addFloat64, location))
         return result
 
     def move_model(self, mod_id, location):
@@ -387,7 +387,7 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "get", m_type]))
-        result.addInt(mod_id)
+        result.addInt32(mod_id)
         return result
 
     def get_model_location(self, mod_id):
@@ -426,8 +426,8 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "rot", m_type]))
-        result.addInt(mod_id)
-        list(map(result.addDouble, orientation))
+        result.addInt32(mod_id)
+        list(map(result.addFloat64, orientation))
         return result
 
     def rotate_model(self, mod_id, orientation):
@@ -460,7 +460,7 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "rot", m_type]))
-        result.addInt(mod_id)
+        result.addInt32(mod_id)
         return result
 
     def get_model_orientation(self, mod_id):
@@ -619,7 +619,7 @@ class WorldController:
         result = yarp.Bottle()
         result.clear()
         list(map(result.addString, ["world", "set", "screen"]))
-        list(map(result.addDouble, location))
+        list(map(result.addFloat64, location))
         return result
 
     def set_screen_location(self, location):
