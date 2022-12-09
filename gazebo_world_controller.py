@@ -39,7 +39,7 @@ class WorldController:
 
     def _is_success(self, ans):
         """Check if RPC call answer Bottle indicates successfull execution."""
-        return ans.size() == 1 and ans.get(0).asVocab() == 27503  # Vocab for '[ok]'
+        return ans.size() == 1 and ans.get(0).asVocab32() == 27503  # Vocab for '[ok]'
 
     def _prepare_del_all_command(self):
         """Prepare the "world del all" command bottle."""
@@ -83,10 +83,10 @@ class WorldController:
         yarp_cmd = yarp.Bottle()
         yarp_cmd.clear()
         yarp_cmd.addString(obj_func)
-        list(map(yarp_cmd.addDouble, size))
-        list(map(yarp_cmd.addDouble, location))
-        list(map(yarp_cmd.addDouble, orientation))
-        list(map(yarp_cmd.addInt, color))
+        list(map(yarp_cmd.addFloat64, size))
+        list(map(yarp_cmd.addFloat64, location))
+        list(map(yarp_cmd.addFloat64, orientation))
+        list(map(yarp_cmd.addInt32, color))
         return yarp_cmd
 
     def create_object(self, obj, size, location, orientation, color):
@@ -147,8 +147,8 @@ class WorldController:
         yarp_cmd.clear()
         yarp_cmd.addString("setPose")
         yarp_cmd.addString(obj_id)
-        list(map(yarp_cmd.addDouble, location))
-        list(map(yarp_cmd.addDouble, rotation))
+        list(map(yarp_cmd.addFloat64, location))
+        list(map(yarp_cmd.addFloat64, rotation))
         return yarp_cmd
 
     def set_pose(self, obj_id, location, rotation):
@@ -251,7 +251,7 @@ class WorldController:
         yarp_cmd = yarp.Bottle()
         yarp_cmd.clear()
         list(map(yarp_cmd.addString, ["changeColor", obj_id]))
-        list(map(yarp_cmd.addInt, new_color))
+        list(map(yarp_cmd.addInt32, new_color))
 
         return yarp_cmd
 
@@ -286,7 +286,7 @@ class WorldController:
         yarp_cmd.clear()
         yarp_cmd.addString("enableGravity")
         yarp_cmd.addString(obj_id)
-        yarp_cmd.addInt(enable)
+        yarp_cmd.addInt32(enable)
         return yarp_cmd
 
     def enable_gravity(self, obj_id, enable):
@@ -319,7 +319,7 @@ class WorldController:
         yarp_cmd.clear()
         yarp_cmd.addString("enableCollision")
         yarp_cmd.addString(obj_id)
-        yarp_cmd.addInt(enable)
+        yarp_cmd.addInt32(enable)
         return yarp_cmd
 
     def enable_collision(self, obj_id, enable):
@@ -418,8 +418,8 @@ class WorldController:
         result.clear()
         result.addString("loadModelFromFileWithPose")
         result.addString(filename)
-        list(map(result.addDouble, location))
-        list(map(result.addDouble, orientation))
+        list(map(result.addFloat64, location))
+        list(map(result.addFloat64, orientation))
         return result
 
     def create_model(self, filename, location, orientation):
