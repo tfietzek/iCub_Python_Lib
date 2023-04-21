@@ -7,6 +7,7 @@ library for network functions
 """
 
 import yarp
+import numpy as np
 
 ####################################################
 ################## general cases ###################
@@ -231,6 +232,45 @@ def network_clean_screen(screen_port, robot_name="icubSim"):
 
     # close the yarp network
     yarp.Network.fini()
+
+
+####################################################
+############### prepare world camera ###############
+def scene_cam_prep(client_name="client", robot_name="icubSim"):
+    '''
+    prepare world camera in the iCub-simulator
+
+    return: scene_cam   -- dict containing stuff for scene cam
+
+    '''
+    ######################################################################
+    ######################### Init YARP network ##########################
+    scene_cam = {}
+
+    # network initialization and check
+    yarp.Network.init()
+    if not yarp.Network.checkNetwork():
+        print('[ERROR] Please try running yarp server')
+
+    # Initialization of all needed ports
+    # Port for scene image
+    scene_cam['port'] = yarp.Port()
+    if not scene_cam['port'].open("/" + client_name+ "/scenecam"):
+        print("[ERROR] Could not open scene camera port")
+    if not yarp.Network.connect("/" + robot_name + "/cam", "/" + client_name+ "/scenecam"):
+        print("[ERROR] Could not connect input port scene")
+
+
+    ######################################################################
+    ############### Initialization of imgae data structures ##############
+
+    scene_cam['np_img'] = np.ones((240, 320, 3), np.uint8)
+    scene_cam['y_img'] = yarp.ImageRgb()
+    scene_cam['y_img'].resize(320, 240)
+
+    scene_cam['y_img'].setExternal(scene_cam['np_img'].data, scene_cam['np_img'].shape[1], scene_cam['np_img'].shape[0])
+
+    return scene_cam
 
 
 ####################################################
