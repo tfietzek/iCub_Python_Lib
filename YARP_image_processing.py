@@ -131,3 +131,19 @@ def show_image(screen_port, image):
     time.sleep(0.03)
     # time_transfer = time.time() - time_transfer
     # print('time transfer image to screen:', round(time_transfer, 4))
+
+
+def read_image(scene_cam):
+    '''
+    retrieve image from the world camera in the iCub-simulator
+
+    return: image   -- return image from the world camera
+
+    '''
+    scene_cam['port'].read(scene_cam['y_img'])
+    scene_cam['port'].read(scene_cam['y_img'])
+
+    if scene_cam['y_img'].getRawImage().__int__() != scene_cam['np_img'].__array_interface__['data'][0]:
+        print("read() reallocated my scene_cam['y_img']!")
+
+    return scene_cam['np_img'].copy()
