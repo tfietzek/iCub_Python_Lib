@@ -13,7 +13,7 @@ import yarp
 
 
 ####################################################
-######### Initialization of the eye images #########
+# Initialization of the eye images
 def define_eye_imgs():
     '''
     Initialization of both eye images
@@ -41,7 +41,7 @@ def define_eye_imgs():
 
 
 ####################################################
-######### Initialization of one eye image ##########
+# Initialization of one eye image
 def define_eye_img():
     '''
     Initialization of one eye image
@@ -61,7 +61,7 @@ def define_eye_img():
 
 
 ####################################################
-######## read and convert robot eye images #########
+# read and convert robot eye images
 def read_robot_eyes(port_right_eye, port_left_eye, right_eye_yarp_image, left_eye_yarp_image, right_eye_img_array, left_eye_img_array):
     '''
     read and convert both robot eye images
@@ -91,7 +91,7 @@ def read_robot_eyes(port_right_eye, port_left_eye, right_eye_yarp_image, left_ey
 
 
 ####################################################
-######### read and convert robot eye image #########
+# read and convert robot eye image
 def read_robot_eye(port_eye, eye_yarp_image, eye_img_array):
     '''
     read and convert one robot eye image
@@ -117,7 +117,7 @@ def read_robot_eye(port_eye, eye_yarp_image, eye_img_array):
 
 
 ####################################################
-############### show image on screen ###############
+# show image on screen (iCub simulator)
 def show_image(screen_port, image):
     '''
     show image on the screen in the iCub-simulator
@@ -133,6 +133,8 @@ def show_image(screen_port, image):
     # print('time transfer image to screen:', round(time_transfer, 4))
 
 
+####################################################
+# read image from world cam (iCub simulator)
 def read_image(scene_cam):
     '''
     retrieve image from the world camera in the iCub-simulator

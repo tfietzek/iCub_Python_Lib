@@ -9,11 +9,13 @@
 
 import os
 
+
 model_path = os.path.abspath("../../iCub_simulator_tools/iCubSim_environment/new_models")
 
 ################################################################
-############### model description for simple pen ###############
+# model description for simple pen
 path_pen = model_path + "/pen"
+
 model_list_pen = []
 
 model_list_pen.append(("pen_simple_pen_small.x", "orange.bmp"))
@@ -24,24 +26,24 @@ dictionary_pen = {'model_type': 'smodel', 'model_list': model_list_pen, 'start_p
 
 
 ################################################################
-############### model description for simple car ###############
+# model description for simple car
 path_car = model_path + "/car"
 
 model_list_car = []
 
 model_list_car.append(("car_windows_small.x", "grey.bmp"))
 
-#model_list_car.append(("car_window_0.x", "grey.bmp"))
-#model_list_car.append(("car_window_1.x", "grey.bmp"))
-#model_list_car.append(("car_window_2.x", "grey.bmp"))
-#model_list_car.append(("car_window_3.x", "grey.bmp"))
+# model_list_car.append(("car_window_0.x", "grey.bmp"))
+# model_list_car.append(("car_window_1.x", "grey.bmp"))
+# model_list_car.append(("car_window_2.x", "grey.bmp"))
+# model_list_car.append(("car_window_3.x", "grey.bmp"))
 
 model_list_car.append(("car_wheels_small.x", "black.bmp"))
 
-#model_list_car.append(("car_wheel_0.x", "black.bmp"))
-#model_list_car.append(("car_wheel_1.x", "black.bmp"))
-#model_list_car.append(("car_wheel_2.x", "black.bmp"))
-#model_list_car.append(("car_wheel_3.x", "black.bmp"))
+# model_list_car.append(("car_wheel_0.x", "black.bmp"))
+# model_list_car.append(("car_wheel_1.x", "black.bmp"))
+# model_list_car.append(("car_wheel_2.x", "black.bmp"))
+# model_list_car.append(("car_wheel_3.x", "black.bmp"))
 
 model_list_car.append(("car_light_0_small.x", "red.bmp"))
 model_list_car.append(("car_light_1_small.x", "red.bmp"))
@@ -56,7 +58,7 @@ dictionary_car = {'model_type': "smodel", 'model_list': model_list_car, 'start_p
 
 
 ################################################################
-################ model description for toy bear ################
+# model description for toy bear
 path_bear = model_path + "/bear"
 
 model_list_bear = []

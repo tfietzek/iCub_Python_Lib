@@ -9,14 +9,15 @@ library for network functions
 import yarp
 import numpy as np
 
+
 ####################################################
-################## general cases ###################
+# general cases
 ####################################################
 
 ####################################################
-################ binocular usecase #################
+# binocular usecase
 
-######### network and port initialization ##########
+# network and port initialization
 def network_init_binocular(client_name="client", robot_name="icubSim"):
     '''
         initialize the yarp network and generate the ports for both iCub's eye cameras
@@ -70,7 +71,8 @@ def network_init_binocular(client_name="client", robot_name="icubSim"):
 
     return input_port_right_eye, input_port_left_eye
 
-################### yarp cleanup ###################
+
+# yarp cleanup
 def network_clean_binocular(port_right_eye, port_left_eye, robot_name="icubSim"):
     '''
         disconnect and close all given ports and clean the network
@@ -109,9 +111,9 @@ def network_clean_binocular(port_right_eye, port_left_eye, robot_name="icubSim")
 
 
 ####################################################
-################ monocular usecase #################
+# monocular usecase
 
-######### network and port initialization ##########
+# network and port initialization
 def network_init_monocular(eye, client_name="client", robot_name="icubSim"):
     '''
         initialize the yarp network and generate the port for one iCub eye camera
@@ -156,7 +158,8 @@ def network_init_monocular(eye, client_name="client", robot_name="icubSim"):
 
     return input_port_eye
 
-################### yarp cleanup ###################
+
+# yarp cleanup
 def network_clean_monocular(input_port_eye, robot_name="icubSim"):
     '''
         disconnect and close all given ports and clean the network
@@ -185,9 +188,9 @@ def network_clean_monocular(input_port_eye, robot_name="icubSim"):
 
 
 ####################################################
-################# simulator screen #################
+# simulator screen
 
-######### network and port initialization ##########
+# network and port initialization
 def network_init_screen(client_name="client", robot_name="icubSim"):
     '''
         initialize the yarp network and generate the port for the iCub-simulator screen
@@ -215,7 +218,8 @@ def network_init_screen(client_name="client", robot_name="icubSim"):
 
     return output_port_screen
 
-################### yarp cleanup ###################
+
+# yarp cleanup
 def network_clean_screen(screen_port, robot_name="icubSim"):
     '''
         disconnect and close  used ports and clean the network
@@ -235,7 +239,7 @@ def network_clean_screen(screen_port, robot_name="icubSim"):
 
 
 ####################################################
-############### prepare world camera ###############
+# prepare world camera
 def scene_cam_prep(client_name="client", robot_name="icubSim"):
     '''
     prepare world camera in the iCub-simulator
@@ -243,8 +247,8 @@ def scene_cam_prep(client_name="client", robot_name="icubSim"):
     return: scene_cam   -- dict containing stuff for scene cam
 
     '''
-    ######################################################################
-    ######################### Init YARP network ##########################
+
+    # Init YARP network
     scene_cam = {}
 
     # network initialization and check
@@ -255,15 +259,12 @@ def scene_cam_prep(client_name="client", robot_name="icubSim"):
     # Initialization of all needed ports
     # Port for scene image
     scene_cam['port'] = yarp.Port()
-    if not scene_cam['port'].open("/" + client_name+ "/scenecam"):
+    if not scene_cam['port'].open("/" + client_name + "/scenecam"):
         print("[ERROR] Could not open scene camera port")
-    if not yarp.Network.connect("/" + robot_name + "/cam", "/" + client_name+ "/scenecam"):
+    if not yarp.Network.connect("/" + robot_name + "/cam", "/" + client_name + "/scenecam"):
         print("[ERROR] Could not connect input port scene")
 
-
-    ######################################################################
-    ############### Initialization of imgae data structures ##############
-
+    # Initialization of imgae data structures
     scene_cam['np_img'] = np.ones((240, 320, 3), np.uint8)
     scene_cam['y_img'] = yarp.ImageRgb()
     scene_cam['y_img'].resize(320, 240)
@@ -274,11 +275,11 @@ def scene_cam_prep(client_name="client", robot_name="icubSim"):
 
 
 ####################################################
-################## special cases ###################
+# special cases
 ####################################################
 
 ####################################################
-######### network and port initialization ##########
+# network and port initialization
 def network_initial():
     '''
         initialize the yarp network and generate the ports for the simulator screen and both iCub's eye cameras
@@ -318,7 +319,8 @@ def network_initial():
 
     return output_port_screen, input_port_right_eye, input_port_left_eye
 
-################### yarp cleanup ###################
+
+# yarp cleanup
 def network_clean(screen_port, port_right_eye, port_left_eye):
     '''
         disconnect and close all used ports and clean the network
@@ -347,7 +349,7 @@ def network_clean(screen_port, port_right_eye, port_left_eye):
 
 
 ####################################################
-# network and port initialization, only right eye ##
+# network and port initialization, only right eye
 def network_initial_only_right():
     '''
         initialize the yarp network and generate the ports for the simulator screen and the iCub's right eye camera
@@ -377,7 +379,8 @@ def network_initial_only_right():
 
     return output_port_screen, input_port_right_eye
 
-########### yarp cleanup, only right eye ###########
+
+# yarp cleanup, only right eye
 def network_clean_only_right(screen_port, port_right_eye):
     '''
         disconnect and close all used ports and clean the network
@@ -399,5 +402,3 @@ def network_clean_only_right(screen_port, port_right_eye):
 
     # close the yarp network
     yarp.Network.fini()
-
-####################################################

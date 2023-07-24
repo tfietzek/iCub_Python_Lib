@@ -9,6 +9,7 @@ Script to import and control groups of models forming a complex object.
 import time
 import numpy as np
 
+
 class ModelGroup:
     """Class for controlling model groups in the iCub simulator."""
     def __init__(self, controller, model_list, mod_type, start_pos, start_orient, model_path):
@@ -57,7 +58,6 @@ class ModelGroup:
                 Returns the model group position [x, y, z]; None on failure
         """
         return np.array(self._controller.get_model_location(self._mod_list[0]))
-
 
     def rotate_model_group(self, new_orientation):
         """

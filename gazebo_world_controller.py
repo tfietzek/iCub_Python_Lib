@@ -1,9 +1,9 @@
 """
     @author: Torsten Fietzek
 
-    Class to control the environment in the iCub simulator, for example simple object manipulation.
+    Class to control the environment in the gazebo simulator, for example simple object manipulation.
     The basis is given for object manipulation in: http://www.icub.org/software_documentation/icub_python_simworld_control.html (Marek Rucinski).
-    This is extended with model import/manipulation, get hand position and screen movement.
+    This is adapted to the gazebo simulator.
 """
 
 
@@ -56,11 +56,11 @@ class WorldController:
         return result
 
 ########################################################
-########### object creation and manipulation ###########
+# object creation and manipulation
 ########################################################
 
     ########################################################
-    ########## create object inside the simulator ##########
+    # create object inside the simulator
     def _prepare_create_obj_command(self, obj_func, size, location, orientation, color):
         """
             Prepare an RPC command for creating an object in the gazebo simulator environment.
@@ -129,7 +129,7 @@ class WorldController:
         return ans.toString()
 
     ########################################################
-    ######### set object pose inside the simulator #########
+    # set object pose inside the simulator
     def _prepare_set_pose_command_obj(self, obj_id, location, rotation):
         """
             Prepare the "world set <obj> <xyz>" command bottle.
@@ -166,7 +166,7 @@ class WorldController:
         return self._is_success(self._execute(self._prepare_set_pose_command_obj(obj_id, location, rotation)))
 
     ########################################################
-    ####### get object pose inside the simulator #######
+    # get object pose inside the simulator
     def _prepare_get_pose_command_obj(self, obj_id):
         """
             Prepare the "world get <obj> <id>" command bottle.
@@ -202,7 +202,7 @@ class WorldController:
         return None  # An error occured
 
     ########################################################
-    ######### set object name inside the simulator #########
+    # set object name inside the simulator
     def _prepare_set_name_command_obj(self, obj_id, new_name):
         """
             Prepare the "world set <obj> <xyz>" command bottle.
@@ -236,7 +236,7 @@ class WorldController:
         return result, new_name
 
     ########################################################
-    ######### change object color inside the simulator #########
+    # change object color inside the simulator
     def _prepare_change_color_command_obj(self, obj_id, new_color):
         """
             Prepare the "world set <obj> <xyz>" command bottle.
@@ -270,7 +270,7 @@ class WorldController:
         return self._is_success(self._execute(self._prepare_change_color_command_obj(obj_id, new_color)))
 
     ########################################################
-    ######### enable gravity for the given obejct ##########
+    # enable gravity for the given obejct
     def _prepare_enable_gravity_command_obj(self, obj_id, enable):
         """
             Prepare the "world set <obj> <xyz>" command bottle.
@@ -303,7 +303,7 @@ class WorldController:
         return self._is_success(self._execute(self._prepare_enable_gravity_command_obj(obj_id, enable)))
 
     ########################################################
-    ######## enable collision for the given obejct #########
+    # enable collision for the given obejct
     def _prepare_enable_collision_command_obj(self, obj_id, enable):
         """
             Prepare the command bottle.
@@ -336,7 +336,7 @@ class WorldController:
         return self._is_success(self._execute(self._prepare_enable_collision_command_obj(obj_id, enable)))
 
     ########################################################
-    ############## get list with object names ##############
+    # get list with object names
     def _prepare_get_list_command_obj(self):
         """
             Prepare the command bottle.
@@ -368,7 +368,7 @@ class WorldController:
         return result.pop().toString().split(' ')
 
     ########################################################
-    ####### delete a single Object in the simulator #######
+    # delete a single Object in the simulator
     def _prepare_del_object_command_obj(self, obj_id):
         """
             Prepare the "world get <obj> <id>" command bottle.
@@ -401,7 +401,7 @@ class WorldController:
         return result
 
     ########################################################
-    ########### load 3D model into the simulator ###########
+    # load 3D model into the simulator
     def _prepare_create_model_command_model(self, filename, location, orientation):
         """
             Prepare an RPC command for importing a model in the simulator environment.
@@ -443,7 +443,7 @@ class WorldController:
         return ans.toString()
 
     ########################################################
-    ################### call destructor ####################
+    # call destructor
     def __del__(self):
         try:
             if self._rpc_client is not None:

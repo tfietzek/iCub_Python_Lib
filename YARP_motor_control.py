@@ -3,7 +3,8 @@ Created on Thu Apr 13 15:16:32 2018
 
 @author: Torsten Fietzek
 
-library containing functions related to the iCub motor control
+Module containing methods facilitating iCub motor control
+-> based on YAPR-Python bindings
 """
 
 import time
@@ -11,11 +12,15 @@ import time
 import numpy as np
 import yarp
 
+
 parts = {"head": True, "left_arm": False, "right_arm": False,
          "torso": True, "right_leg": False, "left_leg": False}
 
+
 ######################################################################
-######################### Init motor control #########################
+# Init motor control interfaces
+
+# Joint based control interfaces -> joint angles/velocities
 def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="client"):
     '''
         initialize motor control for the given part
@@ -68,6 +73,7 @@ def motor_init(part, control="position", robot_prefix="icubSim", client_prefix="
     return iCtrl, iEnc, jnts, driver
 
 
+# Cartesian control interface -> cartesian poses for hand/foot
 def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", client_prefix="client"):
     '''
         initialize cartesian controller for the given part
@@ -86,20 +92,20 @@ def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", cl
         print("Error: No correct part descriptor!")
         return None, None
 
-    ##################### Prepare a property object ######################
+    # Prepare a property object
     props = yarp.Property()
     props.put("device", "cartesiancontrollerclient")
     props.put("remote", "/" + robot_prefix + "/cartesianController/" + part)
     props.put("local", "/cart/" + client_prefix + "/" + part)
 
-    ######################## Create remote driver ########################
+    # Create remote driver
     driver = yarp.PolyDriver(props)
 
     if driver is None:
         print("Error: Motor initialization failed!")
         return None, None
 
-    ################### Query motor control interfaces ###################
+    # Query motor control interfaces
     iCart = driver.viewICartesianControl()
     iCart.setPosePriority(ctrl_prior)
     time.sleep(1)
@@ -107,6 +113,7 @@ def motor_init_cartesian(part, ctrl_prior="position", robot_prefix="icubSim", cl
     return iCart, driver
 
 
+# Gaze controller interface for eye/head movements -> cartesian/image positions
 def gazectrl_init(client_prefix="client"):
     '''
         initialize gaze controller device
@@ -144,7 +151,9 @@ def gazectrl_init(client_prefix="client"):
 
 
 ######################################################################
-###################### go to head zero position ######################
+# Joint position control methods
+
+# Go to head zero position
 def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
     '''
         go to the all joints at 0 degree position
@@ -165,7 +174,7 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
 
 
 ######################################################################
-########## Move joints of controlled part to a new position ##########
+# Move all joints of controlled part to a new position
 def goto_position_block(iPos, iEnc, jnts, position):
     '''
         Go to given position and block until motion done
@@ -179,12 +188,12 @@ def goto_position_block(iPos, iEnc, jnts, position):
     motion = not iPos.positionMove(position.data())
     while not motion:
         act_pos = get_joint_position(iEnc, jnts, as_np=True)
-        motion = iPos.checkMotionDone() 
+        motion = iPos.checkMotionDone()
         # and np.allclose(act_pos, yarpvec_2_npvec(position), atol=0.5)
 
 
 ######################################################################
-##################### Move eyes to new position ######################
+# Move eyes to new position
 def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0.0):
     '''
         move the iCub eyes to a new position
@@ -208,7 +217,7 @@ def move_eyes(eye_pos, iPos_h, jnts_h, offset_h=0.0):
 
 
 ######################################################################
-###################### get the joints positions ######################
+# Get joint angles of the controlled part
 def get_joint_position(iEnc, jnts, as_np=False):
     '''
         get position of controlled joints
@@ -232,7 +241,7 @@ def get_joint_position(iEnc, jnts, as_np=False):
 
 
 ######################################################################
-################## map motor control to dictionary ###################
+# Map motor control to dictionary
 def create_motor_dict(parts_used):
     '''
         wrap the motor control interfaces in a dictionary for a given set of robot parts
@@ -254,7 +263,7 @@ def create_motor_dict(parts_used):
     for key in sequence:
         if key in parts_used:
             iCtrl, iEnc, jnts, driver = motor_init(key, client_prefix="CPG")
-            if not driver is None:
+            if driver is not None:
                 if jnts != sequence[key]:
                     print("Error while motor initialization of part:", key)
                     break
@@ -268,7 +277,8 @@ def create_motor_dict(parts_used):
 
 
 ######################################################################
-####################### gazecontroller methods #######################
+# Gazecontroller methods
+
 def gz_block_head(iGaze):
     '''
         block neck motion for gaze control
@@ -295,8 +305,10 @@ def look_at_3Dpoint(iGaze, point_rrf):
         print("Gaze controller failed!")
         return False
 
+
 ######################################################################
-############# set YARP position vector with given values #############
+# Set YARP position vector with given values
+
 def set_pos_vector(pos_vec, val_j0, val_j1, val_j2, val_j3, val_j4, val_j5):
     '''
         set position vector with given values for each joint (6 joints like iCub head)
@@ -357,7 +369,8 @@ def set_pos_vector_same(value, jnts):
 
 
 ######################################################################
-############ Convert between YARP vector and numpy array #############
+# Convert between YARP vector and numpy array
+
 def npvec_2_yarpvec(array):
     '''
         convert a 1D numpy array into a YARP vector

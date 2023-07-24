@@ -14,57 +14,64 @@ import numpy as np
 
 
 ####################################################
-############ show image with matplotlib ############
+# show image with matplotlib, with x- and y-label
 def show_image_matplot(plot_image, title, xlabel, ylabel):
-    '''
-    function to plot an image with matplotlib
+    """
+    Plot image with matplotlib and the given parameters and colormap gray.
 
-    params: plot_image      -- image to plot
-            title           -- title of the plot
-            xlabel          -- label for the x-axis
-            ylabel          -- label for the y-axis
-    '''
-    # set labels
+    Parameters
+    ----------
+    plot_image : NDarray
+        Image to plot.
+    title : str
+        Title of the image.
+    xlabel : str
+        Label for the x-axis.
+    ylabel : str
+        Label for they-axis
+    """
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
-    # min/max view angle
-    #x = 20
-    #y = 15
-
-    # show image
     plt.imshow(plot_image, cmap='gray', interpolation=None)
     plt.colorbar()
-    #plt.xticks( [-x, -10, 0, 10, x])
-    #plt.yticks( [-y, -5, 0, 5, y])
+
     plt.show()
     plt.pause(0.05)
 
 
 ####################################################
-############ show image with matplotlib ############
-########### define range and axis labels ###########
-def show_matplot_all_label(plot_image, title, xlabel, ylabel, xtick, ytick):
-    '''
-    function to plot an image with matplotlib
+# show image with matplotlib, define axis ranges and axis labels
+def show_matplot_all_label(plot_image, title, xlabel, ylabel, xtick=[None, None], ytick=[None, None]):
+    """
+    Plot image with matplotlib and the given parameters and colormap gray.
 
-    params: plot_image      -- image to plot
-            title           -- title of the plot
-            xlabel          -- label for the x-axis
-            ylabel          -- label for the y-axis
-            xtick           -- x-axis ticks and tick-labels(optional)
-            ytick           -- y-axis ticks and tick-labels(optional)
-    '''
+    Parameters
+    ----------
+    plot_image : NDarray
+        Image to plot.
+    title : str
+        Title of the image.
+    xlabel : str
+        Label for the x-axis.
+    ylabel : str
+        Label for they-axis
+    xtick : list, optional
+        ticks and tick labels for the x-axis, if set to None default ticks/labels will be used, by default [None, None]
+    ytick : list, optional
+        ticks and tick labels for the y-axis, if set to None default ticks/labels will be used, by default [None, None]
+    """
     plt.figure(figsize=(7, 5.5))
-    # set labels
+
     plt.title(title, fontsize=16, y=1.02)
     plt.xlabel(xlabel, fontsize=14)
     plt.ylabel(ylabel, fontsize=14)
 
-    # show image
     plt.imshow(plot_image, cmap='gray', interpolation=None)
     plt.colorbar().ax.tick_params(labelsize=13)
+
+    # set axis tick ranges and labels
     plt.xticks(xtick[0], xtick[1], fontsize=13)
     plt.yticks(ytick[0], ytick[1], fontsize=13)
 
@@ -73,29 +80,41 @@ def show_matplot_all_label(plot_image, title, xlabel, ylabel, xtick, ytick):
 
 
 ####################################################
-############ show image with matplotlib ############
-########### define range and axis labels ###########
-def show_matplot_all_label_clr(plot_image, title, xlabel, ylabel, xtick, ytick, clr_map, size=(7, 5.5)):
-    '''
-    function to plot an image with matplotlib
+# show image with matplotlib
+# define range and axis labels
+def show_matplot_all_label_clr(plot_image, title, xlabel, ylabel, xtick=[None, None], ytick=[None, None], clr_map='gray', size=(7, 5.5)):
+    """
+    Plot image with matplotlib and the given parameters.
 
-    params: plot_image      -- image to plot
-            title           -- title of the plot
-            xlabel          -- label for the x-axis
-            ylabel          -- label for the y-axis
-            xtick           -- x-axis ticks and tick-labels(optional)
-            ytick           -- y-axis ticks and tick-labels(optional)
-    '''
+    Parameters
+    ----------
+    plot_image : NDarray
+        Image to plot.
+    title : str
+        Title of the image.
+    xlabel : str
+        Label for the x-axis.
+    ylabel : str
+        Label for they-axis
+    xtick : list, optional
+        ticks and tick labels for the x-axis, if set to None default ticks/labels will be used, by default [None, None]
+    ytick : list, optional
+        ticks and tick labels for the y-axis, if set to None default ticks/labels will be used, by default [None, None]
+    clr_map : str
+        Colormap descriptor for matplotlib
+    size : tuple, optional
+        Size of the generated figure, by default (7, 5.5)
+    """
     plt.figure(figsize=size)
 
-    # set labels
     plt.title(title, fontsize=16, y=1.02)
     plt.xlabel(xlabel, fontsize=14)
     plt.ylabel(ylabel, fontsize=14)
 
-    # show image
     plt.imshow(plot_image, cmap=clr_map, interpolation=None)
     plt.colorbar().ax.tick_params(labelsize=13)
+
+    # set axis tick ranges and labels
     plt.xticks(xtick[0], xtick[1], fontsize=13)
     plt.yticks(ytick[0], ytick[1], fontsize=13)
 
@@ -104,10 +123,10 @@ def show_matplot_all_label_clr(plot_image, title, xlabel, ylabel, xtick, ytick, 
 
 
 ####################################################
-############# show signal with opencv ##############
+# show signal with opencv
 def show_signal_opencv(signal, title, step):
     '''
-    show a given input signal as a sequence of images
+    show a given 2D-signal sequence as a sequence of images
 
     params: signal      -- array containing the input for all timesteps
             title       -- name of the signal
@@ -118,7 +137,7 @@ def show_signal_opencv(signal, title, step):
     sig = []
     j = 0
     for i in range(0, signal.shape[0]):
-        if j % step == 0:  # change stepsize from 1ms to 10ms
+        if j % step == 0:  # change stepsize from 1ms to the given stepsize
             # -1 if not used the timestep (dummy signal longer then simulated signal)
             if signal[i][0][0] != -1:
                 sig.append(signal[i].T)
@@ -147,7 +166,7 @@ def show_signal_opencv(signal, title, step):
 
 
 ####################################################
-################### show signal ####################
+# show signal
 def show_signal(signals, disp, sig_key, opt, timestep, step):
     '''
     execute the selected options for the selected signal
@@ -180,27 +199,38 @@ def show_signal(signals, disp, sig_key, opt, timestep, step):
 
 
 ####################################################
-########## show 4D array with matplotlib ###########
+# show 4D array with matplotlib
 def show_4Darray_matplot(plot_image, title, h_plot, v_plot, save=False, save_dir="", save_type=".svg"):
-    '''
-    function to plot a 4D numpy array
+    """
+    Plot a 4D numpy array
 
-    params: plot_image      -- 4D array to plot
-            title           -- title of the plot
-            h_plot          -- number of images in horizontal direction
-            v_plot          -- number of images in vertical direction
-            save            -- save plot to file
-    '''
-    splot_img_count = h_plot * v_plot
+    Parameters
+    ----------
+    plot_image : NDarray
+        4D array to plot
+    title : str
+        title of the plot
+    h_plot : int
+        number of images in horizontal direction
+    v_plot : int
+        number of images in vertical direction
+    save : bool, optional
+        save plot to file, by default False
+    save_dir : str, optional
+        save path, by default ""
+    save_type : str, optional
+        file type for plot file, by default ".svg"
+    """
+    plot_img_count = h_plot * v_plot
     h_step = 0
     v_step = 0
     img_count = plot_image.shape[2] * plot_image.shape[3]
 
-    for i in range(math.ceil(img_count / splot_img_count)):
+    for i in range(math.ceil(img_count / plot_img_count)):
         plt.figure(figsize=(13, 10))
         plt.tight_layout()
-        for j in range(splot_img_count):
-            if (j + i * splot_img_count) < img_count:
+        for j in range(plot_img_count):
+            if (j + i * plot_img_count) < img_count:
                 plt.subplot(v_plot, h_plot, j + 1)
                 plt.imshow(plot_image[:, :, h_step, v_step].T, cmap='gray')
                 plt.colorbar()
