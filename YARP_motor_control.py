@@ -174,6 +174,45 @@ def goto_zero_head_pos(iPos_head, iEnc_head, jnts_head):
 
 
 ######################################################################
+# Move a single joint of controlled part to a new position
+def goto_position_block_single(iPos, jnt, position):
+    '''
+        Go to given position and block until motion done
+
+        params: iPos        -- Position Controller for the iCub part
+                jnt         -- controlled joint -> single joint
+                position    -- new position -> single value
+    '''
+    motion = not (iPos.positionMove(jnt, position))
+    yarp.delay(0.01)
+    # optional, for blocking while moving the joints
+    while not motion:
+        motion = iPos.checkMotionDone()
+
+
+# Move a multiple joints of controlled part to a new position
+def goto_position_block_multi(iPos, jnts, position):
+    '''
+        Go to given position and block until motion done
+
+        params: iPos        -- Position Controller for the iCub part
+                jnt         -- controlled joints -> 1D (int) array
+                position    -- new position -> 1D (double) array
+    '''
+    jnts = np.array(jnts)
+    joints = yarp.VectorInt(jnts.shape[0])
+    for i in range(joints.size()):
+        joints.set(i, jnts[i])
+
+    if not isinstance(position, yarp.Vector):
+        position = npvec_2_yarpvec(position)
+
+    motion = not (iPos.positionMove(3, joints.data(), position.data()))
+    # optional, for blocking while moving the joints
+    while not motion:
+        motion = iPos.checkMotionDone()
+
+
 # Move all joints of controlled part to a new position
 def goto_position_block(iPos, iEnc, jnts, position):
     '''
@@ -182,8 +221,11 @@ def goto_position_block(iPos, iEnc, jnts, position):
         params: iPos        -- Position Controller for the iCub part
                 iEnc        -- Encoder for the joints
                 jnts        -- number of controlled joints
-                position    -- new position as YARP-Vector
+                position    -- new position -> 1D
     '''
+
+    if not isinstance(position, yarp.Vector):
+        position = npvec_2_yarpvec(position)
 
     motion = not iPos.positionMove(position.data())
     while not motion:
@@ -373,7 +415,7 @@ def set_pos_vector_same(value, jnts):
 
 def npvec_2_yarpvec(array):
     '''
-        convert a 1D numpy array into a YARP vector
+        convert a 1D numpy array into a YARP vector (double values)
 
         params: array       -- 1D array-like position vector
 
