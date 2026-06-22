@@ -40,9 +40,9 @@ def network_init_binocular(client_name="client", robot_name="icubSim"):
     if not input_port_right_eye.open("/" + client_name + "/eyes/right"):
         print("[ERROR] Could not open right eye port!")
 
-    if yarp.NetworkBase_exists("/" + robot_name + "/cam/right"):
+    if yarp.NetworkBase.exists("/" + robot_name + "/cam/right"):
         port_name_robot_right = "/" + robot_name + "/cam/right"
-    elif yarp.NetworkBase_exists("/" + robot_name + "/cam/right/rgbImage:o"):
+    elif yarp.NetworkBase.exists("/" + robot_name + "/cam/right/rgbImage:o"):
         port_name_robot_right = "/" + robot_name + "/cam/right/rgbImage:o"
     else:
         print("[ERROR] Could not find right camera port!")
@@ -57,9 +57,9 @@ def network_init_binocular(client_name="client", robot_name="icubSim"):
     if not input_port_left_eye.open("/" + client_name + "/eyes/left"):
         print("[ERROR] Could not open left eye port!")
 
-    if yarp.NetworkBase_exists("/" + robot_name + "/cam/left"):
+    if yarp.NetworkBase.exists("/" + robot_name + "/cam/left"):
         port_name_robot_left = "/" + robot_name + "/cam/left"
-    elif yarp.NetworkBase_exists("/" + robot_name + "/cam/left/rgbImage:o"):
+    elif yarp.NetworkBase.exists("/" + robot_name + "/cam/left/rgbImage:o"):
         port_name_robot_left = "/" + robot_name + "/cam/left/rgbImage:o"
     else:
         print("[ERROR] Could not find left camera port!")
@@ -81,9 +81,9 @@ def network_clean_binocular(port_right_eye, port_left_eye, robot_name="icubSim")
                 port_left_eye    -- port to the iCub's left eye camera
                 robot_name       -- YARP-port robot prefix; default: "icubSim"
     '''
-    if yarp.NetworkBase_exists("/" + robot_name + "/cam/right"):
+    if yarp.NetworkBase.exists("/" + robot_name + "/cam/right"):
         port_name_robot_right = "/" + robot_name + "/cam/right"
-    elif yarp.NetworkBase_exists("/" + robot_name + "/cam/right/rgbImage:o"):
+    elif yarp.NetworkBase.exists("/" + robot_name + "/cam/right/rgbImage:o"):
         port_name_robot_right = "/" + robot_name + "/cam/right/rgbImage:o"
     else:
         port_name_robot_right = ""
@@ -92,9 +92,9 @@ def network_clean_binocular(port_right_eye, port_left_eye, robot_name="icubSim")
     if not yarp.Network.disconnect(port_name_robot_right, port_right_eye.getName()):
         print("[ERROR] Could not disconnect input_port_right_eye!")
 
-    if yarp.NetworkBase_exists("/" + robot_name + "/cam/left"):
+    if yarp.NetworkBase.exists("/" + robot_name + "/cam/left"):
         port_name_robot_left = "/" + robot_name + "/cam/left"
-    elif yarp.NetworkBase_exists("/" + robot_name + "/cam/left/rgbImage:o"):
+    elif yarp.NetworkBase.exists("/" + robot_name + "/cam/left/rgbImage:o"):
         port_name_robot_left = "/" + robot_name + "/cam/left/rgbImage:o"
     else:
         port_name_robot_left = ""
@@ -145,9 +145,9 @@ def network_init_monocular(eye, client_name="client", robot_name="icubSim"):
         print("[ERROR] Could not open " + side + " eye port")
         return None
 
-    if yarp.NetworkBase_exists("/" + robot_name + "/cam/" + side):
+    if yarp.NetworkBase.exists("/" + robot_name + "/cam/" + side):
         port_name_robot = "/" + robot_name + "/cam/" + side
-    elif yarp.NetworkBase_exists("/" + robot_name + "/cam/" + side + "/rgbImage:o"):
+    elif yarp.NetworkBase.exists("/" + robot_name + "/cam/" + side + "/rgbImage:o"):
         port_name_robot = "/" + robot_name + "/cam/" + side + "/rgbImage:o"
     else:
         print("[ERROR] Could not find " + side + " camera port!")
@@ -170,9 +170,9 @@ def network_clean_monocular(input_port_eye, robot_name="icubSim"):
 
     # disconnect the port
     str_list = input_port_eye.getName().split(sep="/")
-    if yarp.NetworkBase_exists("/" + robot_name + "/cam/" + str_list[-1]):
+    if yarp.NetworkBase.exists("/" + robot_name + "/cam/" + str_list[-1]):
         port_name_robot = "/" + robot_name + "/cam/" + str_list[-1]
-    elif yarp.NetworkBase_exists("/" + robot_name + "/cam/" + str_list[-1] + "/rgbImage:o"):
+    elif yarp.NetworkBase.exists("/" + robot_name + "/cam/" + str_list[-1] + "/rgbImage:o"):
         port_name_robot = "/" + robot_name + "/cam/" + str_list[-1] + "/rgbImage:o"
     else:
         port_name_robot = ""
