@@ -221,17 +221,19 @@ def goto_position_block(iPos, iEnc, jnts, position):
         params: iPos        -- Position Controller for the iCub part
                 iEnc        -- Encoder for the joints
                 jnts        -- number of controlled joints
-                position    -- new position -> 1D
+                position    -- new position -> 1D vector for joint position
     '''
 
     if not isinstance(position, yarp.Vector):
-        position = npvec_2_yarpvec(position)
+        position_yarp = npvec_2_yarpvec(position)
+    else:
+        position_yarp = position
+        position = yarpvec_2_npvec(position)
 
-    motion = not iPos.positionMove(position.data())
-    while not motion:
+    motion = iPos.positionMove(position_yarp.data())
+    while motion:
         act_pos = get_joint_position(iEnc, jnts, as_np=True)
-        motion = iPos.checkMotionDone()
-        # and np.allclose(act_pos, yarpvec_2_npvec(position), atol=0.5)
+        motion = not (iPos.checkMotionDone() and np.allclose(act_pos, position, atol=0.5))
 
 
 ######################################################################
